@@ -99,7 +99,7 @@ class RegisterPage extends Component {
               name="submit"
               value="Register"
             />
-            <Link to="/home">Cancel</Link>
+            <Link to="/login">Cancel</Link>
           </div>
         </form>
       </div>

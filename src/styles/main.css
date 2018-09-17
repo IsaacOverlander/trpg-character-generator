@@ -2,6 +2,12 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+.info-paragraph {
+    width: 50%;
+    margin-left: 0%;
+    margin-right: 50%;
+}
+
 .instructions h1 {
     font-size: 24px;
     font-weight: 700;
@@ -11,6 +17,10 @@ body {
     background-color: #00acb0;
     padding: 5px;
     color: #ece7e7;
+}
+
+.sample-characters {
+    float: right;
 }
 
 form {
