@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { USER_ACTIONS } from '../../redux/actions/userActions';
+
+const mapStateToProps = state => ({
+    user: state.user,
+});
 
 class MainPage extends Component {
+
+    componentDidMount() {
+        this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+    }
+
+    componentDidUpdate() {
+        if (!this.props.user.isLoading && this.props.user.userName === null) {
+            this.props.history.push('home');
+        }
+    }
+
     render() {
         return (
             <div className="center-page-div">
@@ -14,24 +31,28 @@ class MainPage extends Component {
                     <p>Class: Wizard</p>
                     <p>Race: Human</p>
                     <button>View</button>
+                    <button>Delete</button>
                 </div>
                 <div className="characters">
                     <h4>Greybeard the Flamecaster!</h4>
                     <p>Class: Wizard</p>
                     <p>Race: Human</p>
                     <button>View</button>
+                    <button>Delete</button>
                 </div>
                 <div className="characters">
                     <h4>Greybeard the Flamecaster!</h4>
                     <p>Class: Wizard</p>
                     <p>Race: Human</p>
                     <button>View</button>
+                    <button>Delete</button>
                 </div>
                 <div className="characters">
                     <h4>Greybeard the Flamecaster!</h4>
                     <p>Class: Wizard</p>
                     <p>Race: Human</p>
                     <button>View</button>
+                    <button>Delete</button>
                 </div>
 
             </div>
@@ -39,4 +60,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default connect(mapStateToProps)(MainPage);

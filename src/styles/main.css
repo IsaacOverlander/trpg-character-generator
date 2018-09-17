@@ -18,7 +18,7 @@ body {
 }
 
 .select-styles {
-    width: 100px;
+    width: 125px;
     margin-right: 10px;
 }
 
@@ -42,6 +42,14 @@ body {
     margin: 1px;
     border: solid 1px black;
     width: 23%;
+}
+.form {
+    background-color: #dbd5d5;
+    width: 30%;
+    height: 150px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 2px;
 }
 
 .login-form {
