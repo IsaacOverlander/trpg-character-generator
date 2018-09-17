@@ -49,7 +49,7 @@ const App = () => (
           component={AdminPage}
         />
         <Route 
-          path="/character"
+          path="/character/:id"
           component={CharacterSheet}
         />
         <Route

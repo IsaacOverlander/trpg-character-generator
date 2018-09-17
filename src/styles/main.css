@@ -13,6 +13,14 @@ body {
     font-weight: 700;
 }
 
+.main-page-div {
+    text-align: center;
+}
+
+.logout {
+    float: right;
+}
+
 .instructions {
     background-color: #00acb0;
     padding: 5px;
@@ -21,6 +29,14 @@ body {
 
 .sample-characters {
     float: right;
+}
+
+.characters {
+    float: left;
+    padding: 5px;
+    margin: 1px;
+    border: solid 1px black;
+    width: 23%;
 }
 
 form {
