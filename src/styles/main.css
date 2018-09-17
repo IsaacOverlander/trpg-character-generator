@@ -13,8 +13,13 @@ body {
     font-weight: 700;
 }
 
-.main-page-div {
+.center-page-div {
     text-align: center;
+}
+
+.select-styles {
+    width: 100px;
+    margin-right: 10px;
 }
 
 .logout {
@@ -39,7 +44,7 @@ body {
     width: 23%;
 }
 
-form {
+.login-form {
     background-color: #dbd5d5;
     width: 30%;
     height: 250px;

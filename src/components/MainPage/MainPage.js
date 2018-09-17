@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 class MainPage extends Component {
     render() {
         return (
-            <div className="main-page-div">
+            <div className="center-page-div">
                 <button className="logout">Log Out</button>
+                <br />
                 <h3>Characters</h3>
                 <button>Add Character</button>
                 <br />
