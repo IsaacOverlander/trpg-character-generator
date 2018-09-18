@@ -8,6 +8,73 @@ body {
     margin-right: 50%;
 }
 
+.attribute {
+    border: solid .1px black;
+    padding: 10px
+}
+
+.max-height {
+    height: 300px;
+}
+
+.align-left {
+    text-align: left;
+    display: inline-block;
+}
+
+.border {
+    border: solid 1px black;
+}
+
+.width-33 {
+    width: 33%;
+}
+
+.height-150 {
+    height: 150px;
+}
+
+.height-75 {
+    height: 75px;
+}
+
+.height-25 {
+    height: 25px;
+}
+
+.skills {
+    font-size: 13px;
+    width: 200px;
+}
+
+.span50-left {
+    width: 75%;
+    height: 50px;
+    text-align: left;
+    display: inline-block;
+    border: solid 1px black;
+}
+
+.languages {
+    border: solid 1px black;
+    width: 50%;    
+    height: 150px;
+}
+
+.mod {
+    border: solid 1px black;
+    padding: 1px;
+}
+
+.column-one {
+    text-align: left;
+}
+
+.character-sheet {
+    height: 100%;
+    border: solid 1px black;
+}
+
 .instructions h1 {
     font-size: 24px;
     font-weight: 700;

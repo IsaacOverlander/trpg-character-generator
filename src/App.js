@@ -16,6 +16,8 @@ import MainPage from './components/MainPage/MainPage';
 import AddCharacter from './components/AddCharacter/AddCharacter';
 import AdminPage from './components/AdminPage/AdminPage';
 import CharacterSheet from './components/CharacterSheet/CharacterSheet';
+import SampleOne from './components/SampleCharacters/SampleOne';
+import SampleTwo from './components/SampleCharacters/SampleTwo';
 import './styles/main.css';
 
 const App = () => (
@@ -36,19 +38,27 @@ const App = () => (
           path="/register"
           component={RegisterPage}
         />
-        <Route 
+        <Route
           path="/main"
           component={MainPage}
         />
-        <Route 
+        <Route
+          path="/sample1"
+          component={SampleOne}
+        />
+        <Route
+          path="/sample2"
+          component={SampleTwo}
+        />
+        <Route
           path="/add"
           component={AddCharacter}
         />
-        <Route 
+        <Route
           path="/admin"
           component={AdminPage}
         />
-        <Route 
+        <Route
           path="/character/:id"
           component={CharacterSheet}
         />
