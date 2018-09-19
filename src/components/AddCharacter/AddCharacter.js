@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { triggerLogout } from '../../redux/actions/loginActions';
+
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -18,21 +20,34 @@ class AddCharacter extends Component {
         }
     }
 
+    logout = () => {
+        this.props.dispatch(triggerLogout());
+    }
+
+    back = () => {
+        this.props.history.push('main');
+    }
+
+    toCharacter = () => {
+        this.props.history.push('character/1')
+    }
+
     render() {
         return (
             <div className="center-page-div">
                 <br />
-                <button className="logout">Log Out</button>
+                <button className="logout" onClick={this.logout}>Log Out</button>
+                <button className="back" onClick={this.back}>Back</button>
                 <h3>AddCharacter</h3>
 
                 <form>
                     <select className="select-styles">
-                        <option>Class</option>
+                        {this.props.state.}
                     </select>
                     <select className="select-styles">
                         <option>Race</option>
                     </select>
-                    <button>Generate Character</button>
+                    <button onClick={() => this.toCharacter()}>Generate Character</button>
                 </form>
             </div>
         );

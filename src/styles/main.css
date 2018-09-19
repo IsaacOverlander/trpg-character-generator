@@ -44,6 +44,11 @@ body {
 
 .skills {
     font-size: 13px;
+    width: 150px;
+}
+
+.traits {
+    font-size: 13px;
     width: 200px;
 }
 
@@ -84,6 +89,11 @@ body {
     text-align: center;
 }
 
+.test-grid {
+    background-color: green;
+    height: 100px;
+}
+
 .select-styles {
     width: 125px;
     margin-right: 10px;
@@ -91,6 +101,10 @@ body {
 
 .logout {
     float: right;
+}
+
+.back {
+    float: left;   
 }
 
 .instructions {

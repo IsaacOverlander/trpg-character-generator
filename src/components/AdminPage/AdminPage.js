@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { triggerLogout } from '../../redux/actions/loginActions';
+
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -18,17 +20,21 @@ class AdminPage extends Component {
         }
     }
 
+    logout = () => {
+        this.props.dispatch(triggerLogout());
+    }
+
     render() {
         return (
             <div className="center-page-div">
-                <button className="logout">Log Out</button>
+                <button className="logout" onClick={this.logout}>Log Out</button>
                 <br />
                 <h3>Add Information</h3>
                 <form className="form">
                     <select className="select-styles">
                         <option>Table</option>
                     </select>
-                    <br/>
+                    <br />
                     <input />
                     <br />
                     <input />

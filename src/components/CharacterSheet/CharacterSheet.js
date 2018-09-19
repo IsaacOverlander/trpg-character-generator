@@ -1,23 +1,45 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+import { USER_ACTIONS } from '../../redux/actions/userActions';
+import { triggerLogout } from '../../redux/actions/loginActions';
+
+const mapStateToProps = state => ({
+    user: state.user,
+});
 
 class CharacterSheet extends Component {
+
+    componentDidMount() {
+        this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+    }
+
+    componentDidUpdate() {
+        if (!this.props.user.isLoading && this.props.user.userName === null) {
+            this.props.history.push('home');
+        }
+    }
+
+    logout = () => {
+        this.props.dispatch(triggerLogout());
+    }
+
     render() {
         return (
-            <div className="center-page-div">
+            <div>
                 <Grid container spacing={24}>
-                    <Grid item lg={12}>
+                    <Grid item sm={12}>
                         <button className="logout">Log Out</button>
                     </Grid>
-                    <Grid item lg={12}>
+                    <Grid item sm={12}>
                         <button>Save Character</button>
                     </Grid>
                 </Grid>
                 <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className={"character-sheet"}>
-                    <Grid item lg={6} className="align-left border">
+                    <Grid item sm={6} className="align-left border">
                         <div>Name:</div>
                     </Grid>
-                    <Grid item lg={6} className="border">
+                    <Grid item sm={6} className="border">
                         <Grid container>
                             <Grid item lg={6} className="align-left">
                                 <div>Class: </div>
@@ -31,7 +53,7 @@ class CharacterSheet extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item lg={1} className="align-left">
+                    <Grid item sm={1} className="align-left">
                         <div>Strength</div>
                         <br />
                         <div><span className="attribute">18</span> <span className="mod">+4</span></div>
@@ -68,7 +90,7 @@ class CharacterSheet extends Component {
                         </p>
                         </div>
                     </Grid>
-                    <Grid item lg={1} className="align-left">
+                    <Grid item sm={1} className="align-left">
                         <div>
                             <span className="attribute">0</span><span className="mod">Inspiration</span>
                         </div>
@@ -129,17 +151,17 @@ class CharacterSheet extends Component {
                             <input type="radio" />__<label>Survival</label>
                         </div>
                     </Grid>
-                    <Grid item lg={3} >
+                    <Grid item sm={3} >
                         <Grid container>
                             <Grid container className="border" justify={"space-evenly"}>
                                 <Grid item lg={1}>
-                                <p className="attribute">18</p><p>AC</p>
+                                    <p className="attribute">18</p><p>AC</p>
                                 </Grid>
                                 <Grid item lg={1}>
-                                <p className="attribute">+3</p><p>Initiative</p>
+                                    <p className="attribute">+3</p><p>Initiative</p>
                                 </Grid>
                                 <Grid item lg={1}>
-                                <p className="attribute">30</p><p>Speed</p>
+                                    <p className="attribute">30</p><p>Speed</p>
                                 </Grid>
                                 <Grid item lg={12} className="border height-50">
                                     Current HP
@@ -166,28 +188,28 @@ class CharacterSheet extends Component {
                                     Damage/Type
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
-                                    
-                                </Grid>
-                                <Grid item lg={4} className="border height-25">
-                                    
+
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
 
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
-                                    
+
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
-                                    
+
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
-                                    
+
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
-                                    
+
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
-                                    
+
+                                </Grid>
+                                <Grid item lg={4} className="border height-25">
+
                                 </Grid>
                                 <Grid item lg={4} className="border height-25">
 
@@ -200,21 +222,21 @@ class CharacterSheet extends Component {
                             <Grid container className="border height-150" justify={'flex-start'}></Grid>
                         </Grid>
                     </Grid>
-                    <Grid item lg={3}>
+                    <Grid item sm={3}>
                         <Grid container className="border" justify={"center"}>
-                            <Grid item lg={11} className="border skills">
+                            <Grid item lg={11} className="border traits">
                                 <p>Personality</p>
                                 <p>Personality goes here</p>
                             </Grid>
-                            <Grid item lg={11} className="border skills">
+                            <Grid item lg={11} className="border traits">
                                 <p>Ideal</p>
                                 <p>Ideal goes here</p>
                             </Grid>
-                            <Grid item lg={11} className="border skills">
+                            <Grid item lg={11} className="border traits">
                                 <p>Bond</p>
                                 <p>Bond goes here</p>
                             </Grid>
-                            <Grid item lg={11} className="border skills">
+                            <Grid item lg={11} className="border traits">
                                 <p>Flaw</p>
                                 <p>Flaw goes here</p>
                             </Grid>
@@ -237,4 +259,4 @@ class CharacterSheet extends Component {
     }
 }
 
-export default CharacterSheet;
+export default connect(mapStateToProps)(CharacterSheet);
