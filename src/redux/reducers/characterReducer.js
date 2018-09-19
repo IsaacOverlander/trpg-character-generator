@@ -9,6 +9,13 @@ const characters = (state = [], action) => {
     }
 }
 
+const characterById = (state = {}, action) => {
+    if (action.type === 'SET_CHARACTER_BY_ID'){
+            return action.payload.data;
+    }
+    return state;
+}
+
 const classes = (state = [], action) => {
     if(action.type === 'SET_CLASSES') {
         return action.payload;
@@ -24,6 +31,7 @@ const races = (state = [], action) => {
 }
 
 export default combineReducers({
+    characterById,
     characters,
     classes, 
     races,

@@ -19,8 +19,32 @@ router.get('/', (req, res) => {
     else {
         res.send('You are not logged in!');
     };
-
 });
+
+router.get('/:id', (req, res) => {
+    if (req.isAuthenticated()) {
+        const value = [req.params.id];
+        const query = `SELECT * from "character"
+                        JOIN "class" on "class_id" = "class"."id"
+                        JOIN "race" on "race_id" = "race"."id"
+                        JOIN "background" on "background_id" = "background"."id"
+                        JOIN "alignment" on "alignment_id" = "alignment"."id"
+                        JOIN "personality" on "personality_id" = "personality"."id"
+                        JOIN "ideal" on "ideal_id" = "ideal"."id"
+                        JOIN "bond" on "bond_id" = "bond"."id"
+                        JOIN "flaw" on "flaw_id" = "flaw"."id"
+                        WHERE "character_id" = $1;`;
+        pool.query(query, value).then((result) => {
+            res.send(result.rows[0]);
+        }).catch((error) => {
+            console.log('ERROR', error);
+            res.sendStatus(500);
+        });
+    }
+    else {
+        res.send('You are not logged in')
+    }
+})
 
 router.get('/class', (req, res) => {
     if (req.isAuthenticated()) {
@@ -58,7 +82,7 @@ router.delete('/:id', (req, res) => {
         pool.query(query, [req.params.id]).then((result) => {
             res.sendStatus(200);
         }).catch((error) => {
-            console.log('ERROR',error)
+            console.log('ERROR', error)
             res.sendStatus(500);
         })
     }
