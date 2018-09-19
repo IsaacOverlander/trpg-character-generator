@@ -31,8 +31,8 @@ class CharacterSheet extends Component {
                     <Grid item sm={12}>
                         <button className="logout">Log Out</button>
                     </Grid>
-                    <Grid item sm={12}>
-                        <button>Save Character</button>
+                    <Grid item sm={12} className="center-page-div">
+                        <button >Save Character</button>
                     </Grid>
                 </Grid>
                 <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className={"character-sheet"}>
@@ -154,67 +154,67 @@ class CharacterSheet extends Component {
                     <Grid item sm={3} >
                         <Grid container>
                             <Grid container className="border" justify={"space-evenly"}>
-                                <Grid item lg={1}>
+                                <Grid item md={2}>
                                     <p className="attribute">18</p><p>AC</p>
                                 </Grid>
-                                <Grid item lg={1}>
+                                <Grid item md={2}>
                                     <p className="attribute">+3</p><p>Initiative</p>
                                 </Grid>
-                                <Grid item lg={1}>
+                                <Grid item md={2}>
                                     <p className="attribute">30</p><p>Speed</p>
                                 </Grid>
-                                <Grid item lg={12} className="border height-50">
+                                <Grid item md={12} className="border height-50">
                                     Current HP
                                 </Grid>
-                                <Grid item lg={12} className="border height-50">
+                                <Grid item md={12} className="border height-50">
                                     Temporary HP
                                 </Grid>
-                                <Grid item lg={6} className="border height-50">
+                                <Grid item md={6} className="border height-50">
                                     Hit Dice
                                 </Grid>
-                                <Grid item lg={6} className="border height-50">
+                                <Grid item md={6} className="border height-50">
                                     Death Saves
                                 </Grid>
                             </Grid>
                             <p>Attacks</p>
                             <Grid container className="border" justify={"space-evenly"}>
-                                <Grid item lg={4}>
+                                <Grid item md={4}>
                                     Name
                                 </Grid>
-                                <Grid item lg={4}>
+                                <Grid item md={4}>
                                     Bonus
                                 </Grid>
-                                <Grid item lg={4}>
+                                <Grid item md={4}>
                                     Damage/Type
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={4} className="border height-25">
+                                <Grid item md={4} className="border height-25">
 
                                 </Grid>
-                                <Grid item lg={12} className="border height-150">
+                                <Grid item md={12} className="border height-150">
 
                                 </Grid>
                             </Grid>

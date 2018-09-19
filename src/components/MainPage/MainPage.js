@@ -36,6 +36,10 @@ class MainPage extends Component {
         this.props.history.push(`character/${id}`);
     }
 
+    deleteCharacter = (id) => {
+        this.props.dispatch({type: 'DELETE_CHARACTER', payload: id});
+    }
+
     render() {
         return (
             <div>
@@ -60,7 +64,7 @@ class MainPage extends Component {
                                 <p>Class: {character.class_name}</p>
                                 <p>Race: Human</p>
                                 <Button variant="contained" color="primary" onClick={() => this.toCharacter(character.id)}>View</Button>
-                                <Button variant="contained" color="secondary">Delete</Button>
+                                <Button variant="contained" color="secondary" onClick={() => this.deleteCharacter(character.id)}>Delete</Button>
                             </Card>
                         )
                     })}

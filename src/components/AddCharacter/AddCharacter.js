@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
+import Button from '@material-ui/core/Button';
 
 
 const mapStateToProps = state => ({
@@ -31,7 +32,7 @@ class AddCharacter extends Component {
         this.props.history.push('main');
     }
 
-    toCharacter = () => {
+    createCharacter = () => {
         this.props.history.push('character/1')
     }
 
@@ -39,8 +40,8 @@ class AddCharacter extends Component {
         return (
             <div className="center-page-div">
                 <br />
-                <button className="logout" onClick={this.logout}>Log Out</button>
-                <button className="back" onClick={this.back}>Back</button>
+                <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
+                <Button variant="contained" color="primary" className="back" onClick={this.back}>Back</Button>
                 <h3>AddCharacter</h3>
                 <form>
                     <select className="select-styles">
@@ -59,7 +60,7 @@ class AddCharacter extends Component {
                             )
                         })}
                     </select>
-                    <button onClick={() => this.toCharacter()}>Generate Character</button>
+                    <Button variant="contained" color="primary" onClick={() => this.createCharacter()}>Generate Character</Button>
                 </form>
             </div>
         );

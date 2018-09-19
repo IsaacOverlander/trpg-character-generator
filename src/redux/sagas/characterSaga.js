@@ -12,6 +12,16 @@ function* getCharacters() {
     }
 }
 
+function* deleteCharacter(action) {
+    try {
+        yield call(axios.delete, `/api/character/${action.payload}`);
+        yield put({type: 'GET_CHARACTERS'});
+    } catch (error) {
+        alert('There was an error deleting your character!');
+        console.log(error);
+    }
+}
+
 function* getClasses() {
     try {
         const classes = yield call(axios.get, '/api/character/class');
@@ -34,6 +44,7 @@ function* getRaces() {
 
 function* characterSaga() {
     yield takeLatest('GET_CHARACTERS', getCharacters);
+    yield takeLatest('DELETE_CHARACTER', deleteCharacter);
     yield takeLatest('GET_CLASSES', getClasses);
     yield takeLatest('GET_RACES', getRaces);
 }
