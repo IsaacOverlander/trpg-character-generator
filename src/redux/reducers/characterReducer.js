@@ -25,4 +25,6 @@ const races = (state = [], action) => {
 
 export default combineReducers({
     characters,
+    classes, 
+    races,
 });

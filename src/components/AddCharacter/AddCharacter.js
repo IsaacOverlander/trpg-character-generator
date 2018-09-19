@@ -6,12 +6,15 @@ import { triggerLogout } from '../../redux/actions/loginActions';
 
 const mapStateToProps = state => ({
     user: state.user,
+    state,
 });
 
 class AddCharacter extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+        this.props.dispatch({ type: 'GET_CLASSES' });
+        this.props.dispatch({ type: 'GET_RACES' });
     }
 
     componentDidUpdate() {
@@ -39,13 +42,22 @@ class AddCharacter extends Component {
                 <button className="logout" onClick={this.logout}>Log Out</button>
                 <button className="back" onClick={this.back}>Back</button>
                 <h3>AddCharacter</h3>
-
                 <form>
                     <select className="select-styles">
-                        {this.props.state.}
+                        <option>Select a race</option>
+                        {this.props.state.character.races.map((raceoption) => {
+                            return (
+                                <option key={raceoption.id} value={raceoption.id}>{raceoption.race_name}</option>
+                            )
+                        })}
                     </select>
                     <select className="select-styles">
-                        <option>Race</option>
+                        <option>Select a class</option>
+                        {this.props.state.character.classes.map((classoption) => {
+                            return (
+                                <option key={classoption.id} value={classoption.id}>{classoption.class_name}</option>
+                            )
+                        })}
                     </select>
                     <button onClick={() => this.toCharacter()}>Generate Character</button>
                 </form>

@@ -18,8 +18,8 @@ router.get('/', (req, res) => {
 
 router.get('/class', (req, res) => {
     const query = `SELECT * FROM "class";`;
-    pool.query(query).then((reult) => {
-        res.send(result);
+    pool.query(query).then((result) => {
+        res.send(result.rows);
     }).catch((error) => {
         console.log('ERROR', error);
         res.sendStatus(500);
@@ -28,8 +28,8 @@ router.get('/class', (req, res) => {
 
 router.get('/race', (req, res) => {
     const query = `SELECT * FROM "race";`;
-    pool.query(query).then((reult) => {
-        res.send(result);
+    pool.query(query).then((result) => {
+        res.send(result.rows);
     }).catch((error) => {
         console.log('ERROR', error);
         res.sendStatus(500);
