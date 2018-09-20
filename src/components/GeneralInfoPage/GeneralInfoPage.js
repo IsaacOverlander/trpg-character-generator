@@ -19,6 +19,7 @@ class GeneralInfoPage extends Component {
             <div>
                 <LogNav />
                 <Grid container justify={"center"}>
+                    {/* general info about the site */}
                     <Grid item lg={6} className="info-paragraph">
                         <h3>General Info</h3>
                         <p>General info about the site:Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -29,6 +30,7 @@ class GeneralInfoPage extends Component {
                            mollit anim id est laborum.
                         </p>
                     </Grid>
+                    {/* sample characters that anyone can view */}
                     <Grid item lg={6} className="sample-characters">
                         <Grid container justify={"center"}>
                             <Grid item lg={4}>

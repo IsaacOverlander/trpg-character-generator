@@ -20,35 +20,42 @@ class CharacterSheet extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+        // dispatch to a GET request for characters based on their id
         this.props.dispatch({ type: 'GET_CHARACTER_BY_ID', payload: this.props.match.params.id })
     }
 
     componentDidUpdate() {
         if (!this.props.user.isLoading && this.props.user.userName === null) {
-            this.props.history.push('home');
+            this.props.history.push('/home');
         }
     }
 
+    // Function to log out the current user
     logout = () => {
         this.props.dispatch(triggerLogout());
     }
 
     render() {
+        // Sets character to the information related to the page
         const character = this.props.state.character.characterById
         return (
             <div>
+                {/* Grid container for log out, save buttons */}
                 <Grid container spacing={24}>
                     <Grid item sm={12}>
-                        <button className="logout">Log Out</button>
+                        <button className="logout" onClick={this.logout}>Log Out</button>
                     </Grid>
                     <Grid item sm={12} className="center-page-div">
                         <button >Save Character</button>
                     </Grid>
                 </Grid>
+                {/* Grid container for character sheet */}
                 <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className={"character-sheet"}>
+                    {/* item containing character name */}
                     <Grid item sm={6} className="align-left border">
                         <div>Name: {character.name}</div>
                     </Grid>
+                    {/* item containing character info */}
                     <Grid item sm={6} className="border">
                         <Grid container>
                             <Grid item lg={6} className="align-left">
@@ -62,6 +69,7 @@ class CharacterSheet extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
+                    {/* item containing attributes and languages */}
                     <Grid item sm={1} className="align-left">
                         <div>Strength</div>
                         <br />
@@ -91,7 +99,7 @@ class CharacterSheet extends Component {
                         <br />
                         <div><span className="attribute">16</span></div>
                         <br />
-                        <div>Languages/Skills</div>
+                        <div>Languages</div>
                         <div className="border">
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                Aenean diam velit, hendrerit et elit in, ultricies posuere nunc.
@@ -99,6 +107,7 @@ class CharacterSheet extends Component {
                             </p>
                         </div>
                     </Grid>
+                    {/* item containing skills */}
                     <Grid item sm={1} className="align-left">
                         <div>
                             <span className="attribute">0</span><span className="mod">Inspiration</span>
@@ -106,7 +115,7 @@ class CharacterSheet extends Component {
                         <br />
                         <br />
                         <div>
-                            <span className="attribute">2</span><span className="mod">Proficiency</span>
+                            <span className="attribute">{character.proficiency}</span><span className="mod">Proficiency</span>
                         </div>
                         <br />
                         <div className="border skills">
@@ -160,14 +169,15 @@ class CharacterSheet extends Component {
                             <input type="radio" />__<label>Survival</label>
                         </div>
                     </Grid>
+                    {/* item containing HP, attacks, and equipment */}
                     <Grid item sm={3} >
                         <Grid container>
                             <Grid container className="border" justify={"space-evenly"}>
                                 <Grid item md={2}>
-                                    <p className="attribute">{character.armor_class}</p><p>AC</p>
+                                    <p className="attribute"></p><p>AC</p>
                                 </Grid>
                                 <Grid item md={2}>
-                                    <p className="attribute">+{character.initiative}</p><p>Initiative</p>
+                                    <p className="attribute"></p><p>Initiative</p>
                                 </Grid>
                                 <Grid item md={2}>
                                     <p className="attribute">{character.speed}</p><p>Speed</p>
@@ -185,7 +195,7 @@ class CharacterSheet extends Component {
                                 </Grid>
                                 <Grid item md={6} className="border height-75 align-left">
                                     Death Saves
-                                    <br/>
+                                    <br />
                                     <input type="radio" /><input type="radio" /><input type="radio" /><span>Successes</span>
                                     <br />
                                     <input type="radio" /><input type="radio" /><input type="radio" /><span>Failures</span>
@@ -237,6 +247,7 @@ class CharacterSheet extends Component {
                             <Grid container className="border height-150" justify={'flex-start'}></Grid>
                         </Grid>
                     </Grid>
+                    {/* item containing traits and class/race skills */}
                     <Grid item sm={3}>
                         <Grid container className="border" justify={"center"}>
                             <Grid item lg={11} className="border traits">

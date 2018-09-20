@@ -1,6 +1,7 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// Function to send a GET request for all characters by user_id
 function* getCharacters() {
     try {
         const characters = yield call(axios.get, '/api/character');
@@ -12,6 +13,7 @@ function* getCharacters() {
     }
 }
 
+// Function to send a Get request for a specific character
 function* getCharacterById(action) {
     try {
         const characterById = yield call(axios.get, `/api/character/${action.payload}`);
@@ -22,6 +24,17 @@ function* getCharacterById(action) {
     }
 }
 
+// Function to send a POST request to add a character to the database
+function* generateCharacter(action) {
+    try {
+        yield call(axios.post, 'api/character/create', action.payload);;
+    } catch (error) {
+        alert('There was an error creating your character!');
+        console.log(error);
+    }
+}
+
+// Function to send a DELETE request to remove specific characters from the database
 function* deleteCharacter(action) {
     try {
         yield call(axios.delete, `/api/character/${action.payload}`);
@@ -32,6 +45,7 @@ function* deleteCharacter(action) {
     }
 }
 
+// Function to send a GET request to populate dropdowns
 function* getClasses() {
     try {
         const classes = yield call(axios.get, '/api/character/class');
@@ -42,6 +56,7 @@ function* getClasses() {
     }
 }
 
+// Function to send a GET request to populate dropdowns
 function* getRaces() {
     try {
         const classes = yield call(axios.get, '/api/character/race');
@@ -58,6 +73,7 @@ function* characterSaga() {
     yield takeLatest('GET_CLASSES', getClasses);
     yield takeLatest('GET_RACES', getRaces);
     yield takeLatest('GET_CHARACTER_BY_ID', getCharacterById);
+    yield takeLatest('CREATE_CHARACTER', generateCharacter);
 }
 
 export default characterSaga;

@@ -20,6 +20,7 @@ class AdminPage extends Component {
         }
     }
 
+    // Funciton for logginf out the current user
     logout = () => {
         this.props.dispatch(triggerLogout());
     }
@@ -27,18 +28,23 @@ class AdminPage extends Component {
     render() {
         return (
             <div className="center-page-div">
+                {/* Log out button */}
                 <button className="logout" onClick={this.logout}>Log Out</button>
                 <br />
                 <h3>Add Information</h3>
+                {/* Form for adding information to the database */}
                 <form className="form">
+                {/* Dropdown for selecting which database table to add to */}
                     <select className="select-styles">
                         <option>Table</option>
                     </select>
                     <br />
+                    {/* Inputs that will change based on the table that is selected */}
                     <input />
                     <br />
                     <input />
                     <br />
+                    {/* Button to submit form */}
                     <button>Submit</button>
                 </form>
             </div>

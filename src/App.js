@@ -9,8 +9,6 @@ import {
 import Header from './components/Header/Header';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
-import UserPage from './components/UserPage/UserPage';
-import InfoPage from './components/InfoPage/InfoPage';
 import GeneralInfoPage from './components/GeneralInfoPage/GeneralInfoPage';
 import MainPage from './components/MainPage/MainPage';
 import AddCharacter from './components/AddCharacter/AddCharacter';
@@ -61,14 +59,6 @@ const App = () => (
         <Route
           path="/character/:id"
           component={CharacterSheet}
-        />
-        <Route
-          path="/user"
-          component={UserPage}
-        />
-        <Route
-          path="/info"
-          component={InfoPage}
         />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />

@@ -15,6 +15,7 @@ class MainPage extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+        // dispatch to get all characters for a specific user
         this.props.dispatch({ type: 'GET_CHARACTERS' })
     }
 
@@ -24,18 +25,22 @@ class MainPage extends Component {
         }
     }
 
+    // Function for logging out current user
     logout = () => {
         this.props.dispatch(triggerLogout());
     }
 
+    // Function to send the user to the AddCharacter page
     toAddCharacters = () => {
         this.props.history.push('add');
     }
 
+    // Function to send the user to specific characters pages
     toCharacter = (id) => {
         this.props.history.push(`character/${id}`);
     }
 
+    // Function for deleting specific characters
     deleteCharacter = (id) => {
         this.props.dispatch({type: 'DELETE_CHARACTER', payload: id});
     }
@@ -55,16 +60,18 @@ class MainPage extends Component {
                     <Grid item md={1} >
                         <Button variant="contained" color="primary" onClick={this.toAddCharacters}>Add Character</Button>
                     </Grid>
-                </Grid>
+                </Grid>     
+                {/* container to display characters in cards */}
                 <Grid container justify={"space-evenly"}>
                     {this.props.state.character.characters.map((character) => {
+                        console.log(character);
                         return (
                             <Card key={character.id} className="characters">
                                 <h4>{character.name}</h4>
                                 <p>Class: {character.class_name}</p>
-                                <p>Race: Human</p>
-                                <Button variant="contained" color="primary" onClick={() => this.toCharacter(character.id)}>View</Button>
-                                <Button variant="contained" color="secondary" onClick={() => this.deleteCharacter(character.id)}>Delete</Button>
+                                <p>Race: {character.race_name}</p>
+                                <Button variant="contained" color="primary" onClick={() => this.toCharacter(character.character_id)}>View</Button>
+                                <Button variant="contained" color="secondary" onClick={() => this.deleteCharacter(character.character_id)}>Delete</Button>
                             </Card>
                         )
                     })}
