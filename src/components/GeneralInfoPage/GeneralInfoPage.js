@@ -22,12 +22,14 @@ class GeneralInfoPage extends Component {
                     {/* general info about the site */}
                     <Grid item lg={6} className="info-paragraph">
                         <h3>General Info</h3>
-                        <p>General info about the site:Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                           Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                           mollit anim id est laborum.
+                        <p>
+                            TRPG character generator is a site built for the purpose of reducing the time required
+                            to begin a Table Top Role-Playing Game.</p>
+                        <p>
+                            Currently it supports Dungeons and Dragons, but the goal is to incorporate many other games
+                            such as: Vampire the Masquerade, Werewolf the Apocalypse, Shadowrun, and many more!
+                            Register now to begin creating your own characters, or look at some examples of characters
+                            from the options on the right! 
                         </p>
                     </Grid>
                     {/* sample characters that anyone can view */}
