@@ -131,7 +131,7 @@ class CharacterSheet extends Component {
                             <br />
                             <div>Passive Wisdom</div>
                             <br />
-                            <div><span className="attribute">16</span></div>
+                            <div><span className="attribute">{characterMods.passiveWisdom}</span></div>
                             <br />
                             <div>Languages</div>
                             <div className="border">
@@ -208,10 +208,10 @@ class CharacterSheet extends Component {
                             <Grid container>
                                 <Grid container className="border" justify={"space-evenly"}>
                                     <Grid item md={2}>
-                                        <p className="attribute"></p><p>AC</p>
+                                        <p className="attribute">{characterMods.ac}</p><p>AC</p>
                                     </Grid>
                                     <Grid item md={2}>
-                                        <p className="attribute"></p><p>Initiative</p>
+                                        <p className="attribute">{characterMods.dexterityModifier}</p><p>Initiative</p>
                                     </Grid>
                                     <Grid item md={2}>
                                         <p className="attribute">{characterInfo.speed}</p><p>Speed</p>

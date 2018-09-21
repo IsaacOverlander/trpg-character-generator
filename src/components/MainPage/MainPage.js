@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import { triggerLogout } from '../../redux/actions/loginActions';
+import swal from '../../../node_modules/sweetalert';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -42,7 +43,20 @@ class MainPage extends Component {
 
     // Function for deleting specific characters
     deleteCharacter = (id) => {
-        this.props.dispatch({type: 'DELETE_CHARACTER', payload: id});
+        swal(`Are you sure you want to delete this character forever?
+              (That's a really long time!)`,
+            {
+                buttons: ['No, Don\'t delete it!', 'Yes, Delete it!'],
+                dangerMode: true,
+            }
+        ).then((result) => {
+            if (result) {
+                this.props.dispatch({ type: 'DELETE_CHARACTER', payload: id });
+            }
+            else {
+                swal('Your character has been saved by the gods!');
+            }
+        });
     }
 
     render() {
@@ -60,7 +74,7 @@ class MainPage extends Component {
                     <Grid item md={1} >
                         <Button variant="contained" color="primary" onClick={this.toAddCharacters}>Add Character</Button>
                     </Grid>
-                </Grid>     
+                </Grid>
                 {/* container to display characters in cards */}
                 <Grid container justify={"space-evenly"}>
                     {this.props.state.character.characters.map((character) => {

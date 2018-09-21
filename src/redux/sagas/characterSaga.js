@@ -32,6 +32,8 @@ function* setModifiers(action) {
     const intelligenceMod = yield modifiers[action.payload.data.intelligence - 1];
     const wisdomMod = yield modifiers[action.payload.data.wisdom - 1];
     const charismaMod = yield modifiers[action.payload.data.charisma - 1];
+    const passiveWisdom = yield 10 + Number(wisdomMod);
+    const armorClass = yield 10 + Number(dexterityMod);
     const character = yield {
         info: action.payload.data,
         mods: {
@@ -41,6 +43,8 @@ function* setModifiers(action) {
             intelligenceModifier: intelligenceMod,
             wisdomModifier: wisdomMod,
             charismaModifier: charismaMod,
+            passiveWisdom: passiveWisdom,
+            ac: armorClass,
         }
     }
     yield put({type: 'SET_CHARACTER_BY_ID', payload: character})
