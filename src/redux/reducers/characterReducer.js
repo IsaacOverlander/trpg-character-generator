@@ -14,7 +14,7 @@ const characters = (state = [], action) => {
 // Sets character by character_id
 const characterById = (state = {}, action) => {
     if (action.type === 'SET_CHARACTER_BY_ID'){
-            return action.payload.data;
+            return action.payload;
     }
     return state;
 }

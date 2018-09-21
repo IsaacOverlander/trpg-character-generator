@@ -17,12 +17,34 @@ function* getCharacters() {
 function* getCharacterById(action) {
     try {
         const characterById = yield call(axios.get, `/api/character/${action.payload}`);
-        yield put({type: 'SET_CHARACTER_BY_ID', payload: characterById});
+        yield put({type: 'SET_MODS', payload: characterById});
     } catch (error) {
         alert('There was an error getting your character!');
         console.log(error);
     }
 }
+
+function* setModifiers(action) {
+    const modifiers = yield ['-5','-4','-4','-3','-3','-2','-2','-1','-1','+0','+0','+1','+1','+2','+2','+3','+3','+4','+4','+5'];
+    const strengthMod = yield modifiers[action.payload.data.strength - 1];
+    const dexterityMod = yield modifiers[action.payload.data.dexterity - 1];
+    const constitutionMod = yield modifiers[action.payload.data.constitution - 1];
+    const intelligenceMod = yield modifiers[action.payload.data.intelligence - 1];
+    const wisdomMod = yield modifiers[action.payload.data.wisdom - 1];
+    const charismaMod = yield modifiers[action.payload.data.charisma - 1];
+    const character = yield {
+        info: action.payload.data,
+        mods: {
+            strengthModifier: strengthMod,
+            dexterityModifier: dexterityMod,
+            constitutionModifier: constitutionMod,
+            intelligenceModifier: intelligenceMod,
+            wisdomModifier: wisdomMod,
+            charismaModifier: charismaMod,
+        }
+    }
+    yield put({type: 'SET_CHARACTER_BY_ID', payload: character})
+};
 
 // Function to send a POST request to add a character to the database
 function* generateCharacter(action) {
@@ -67,6 +89,17 @@ function* getRaces() {
     }
 }
 
+// Function for updating characters
+function* updateCharacter(action) {
+    try {
+        yield call(axios.put, `/api/character/update/${action.payload.id}`, action.payload);
+        yield put({type: 'GET_CHARACTER_BY_ID', payload: action.payload.id})
+    } catch (error) {
+        alert('There was an error updating your character!');
+        console.log(error);
+    }
+}
+
 function* characterSaga() {
     yield takeLatest('GET_CHARACTERS', getCharacters);
     yield takeLatest('DELETE_CHARACTER', deleteCharacter);
@@ -74,6 +107,8 @@ function* characterSaga() {
     yield takeLatest('GET_RACES', getRaces);
     yield takeLatest('GET_CHARACTER_BY_ID', getCharacterById);
     yield takeLatest('CREATE_CHARACTER', generateCharacter);
+    yield takeLatest('UPDATE_CHARACTER', updateCharacter);
+    yield takeLatest('SET_MODS', setModifiers);
 }
 
 export default characterSaga;

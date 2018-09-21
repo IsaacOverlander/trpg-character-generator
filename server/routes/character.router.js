@@ -52,6 +52,22 @@ router.get('/race', (req, res) => {
     };
 });
 
+// PUT route for updating characters
+router.put('/update/:id', (req, res) => {
+    if (req.isAuthenticated()) {
+        const query = `UPDATE "character" SET "name" = $1, "experience" = $2 WHERE "character_id" = $3;`;
+        pool.query(query, [req.body.name, req.body.exp, req.params.id]).then((result) => {
+            res.sendStatus(200);
+        }).catch((error) => {
+            console.log('ERROR', error);
+            res.sendStatus(500);
+        });
+    }
+    else {
+        res.send('You are not logged in!');
+    };
+})
+
 // DELETE route for removing characters
 router.delete('/:id', (req, res) => {
     if (req.isAuthenticated()) {
@@ -77,12 +93,12 @@ router.post('/create', (req, res) => {
                                                 "flaw_id", "name", "strength", "dexterity", "constitution", 
                                                 "intelligence", "wisdom", "charisma", "inspiration", "proficiency")
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18);`;
-        pool.query(query, [req.user.id, req.body.class_id, req.body.background_id, req.body.race_id, req.body.alignment_id, 
-                           req.body.personality_id, req.body.ideal_id, req.body.bond_id, req.body.flaw_id, req.body.name, 
-                           req.body.strength, req.body.dexterity, req.body.constitution, req.body.intelligence, req.body.wisdom, 
-                           req.body.charisma, req.body.inspiration, req.body.proficiency])
+        pool.query(query, [req.user.id, req.body.class_id, req.body.background_id, req.body.race_id, req.body.alignment_id,
+        req.body.personality_id, req.body.ideal_id, req.body.bond_id, req.body.flaw_id, req.body.name,
+        req.body.strength, req.body.dexterity, req.body.constitution, req.body.intelligence, req.body.wisdom,
+        req.body.charisma, req.body.inspiration, req.body.proficiency])
             .then((result) => {
-                res.sendStatus(200);
+                res.sendStatus(201);
             }).catch((error) => {
                 console.log(error);
                 res.sendStatus(500);

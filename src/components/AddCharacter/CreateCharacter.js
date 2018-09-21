@@ -2,8 +2,6 @@ import d20 from 'd20/d20';
 
 // Function for randomizing charater data
 const createCharacter = () => {
-    const classToCreate = d20.roll('1d12');
-    const raceToCreate = d20.roll('1d9');
     const backgroundToCreate = d20.roll('1d18');
     const alignmentToCreate = d20.roll('1d8');
     const personalityToCreate = d20.roll('1d104');
@@ -20,9 +18,8 @@ const createCharacter = () => {
 
     //returns an object that is used to set state in AddCharacter
     return {
-        class_id: classToCreate,
+        ...this.state,
         background_id: backgroundToCreate,
-        race_id: raceToCreate,
         alignment_id: alignmentToCreate,
         personality_id: personalityToCreate,
         ideal_id: idealToCreate,

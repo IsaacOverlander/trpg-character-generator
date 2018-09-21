@@ -71,7 +71,15 @@ constructor() {
         })
     }
 
+    handleChange = (event) => {
+        this.setState({
+            ...this.state,
+            [event.target.name]: event.target.value,
+        });
+    }
+
     render() {
+        console.log(this.state);
         return (
             <div className="center-page-div">
                 <br />
@@ -82,7 +90,7 @@ constructor() {
                 <h3>AddCharacter</h3>
                 <form>
                     {/* Race dropdown */}
-                    <select className="select-styles">
+                    <select value={this.state.race_id} onChange={this.handleChange} name="race_id" className="select-styles">
                         <option>Select a race</option>
                         {this.props.state.character.races.map((raceoption) => {
                             return (
@@ -91,7 +99,7 @@ constructor() {
                         })}
                     </select>
                     {/* Class Dropdown */}
-                    <select className="select-styles">
+                    <select value={this.state.class_id} onChange={this.handleChange} name="class_id" className="select-styles">
                         <option>Select a class</option>
                         {this.props.state.character.classes.map((classoption) => {
                             return (

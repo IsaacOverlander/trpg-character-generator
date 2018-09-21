@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
+import Button from '@material-ui/core/Button';
+import swal from '../../../node_modules/sweetalert';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -14,14 +16,20 @@ class CharacterSheet extends Component {
     constructor() {
         super();
         this.state = {
-
+            name: '',
+            id: '',
+            exp: '',
         }
     }
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
         // dispatch to a GET request for characters based on their id
-        this.props.dispatch({ type: 'GET_CHARACTER_BY_ID', payload: this.props.match.params.id })
+        this.props.dispatch({ type: 'GET_CHARACTER_BY_ID', payload: this.props.match.params.id });
+        this.setState({
+            ...this.state,
+            id: this.props.match.params.id,
+        });
     }
 
     componentDidUpdate() {
@@ -35,253 +43,283 @@ class CharacterSheet extends Component {
         this.props.dispatch(triggerLogout());
     }
 
+    handleChange = (event) => {
+        this.setState({
+            ...this.state,
+            [event.target.name]: event.target.value,
+        });
+    }
+
+    // Function for updating character
+    saveCharacter = (event) => {
+        event.preventDefault();
+        this.props.dispatch({ type: 'UPDATE_CHARACTER', payload: this.state });
+        this.setState({
+            ...this.state,
+            name: '',
+            exp: '',
+        })
+    }
+
     render() {
-        // Sets character to the information related to the page
-        const character = this.props.state.character.characterById
-        return (
-            <div>
-                {/* Grid container for log out, save buttons */}
-                <Grid container spacing={24}>
-                    <Grid item sm={12}>
-                        <button className="logout" onClick={this.logout}>Log Out</button>
-                    </Grid>
-                    <Grid item sm={12} className="center-page-div">
-                        <button >Save Character</button>
-                    </Grid>
-                </Grid>
-                {/* Grid container for character sheet */}
-                <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className={"character-sheet"}>
-                    {/* item containing character name */}
-                    <Grid item sm={6} className="align-left border">
-                        <div>Name: {character.name}</div>
-                    </Grid>
-                    {/* item containing character info */}
-                    <Grid item sm={6} className="border">
-                        <Grid container>
-                            <Grid item lg={6} className="align-left">
-                                <div>Class: lvl {character.lvl} {character.class_name} </div>
-                                <div>Background: {character.background_name}</div>
-                            </Grid>
-                            <Grid item lg={6} className="align-left">
-                                <div>Race: {character.race_name}</div>
-                                <div>Alignment: {character.alignment_name}</div>
-                                <div>EXP: {character.experience}</div>
-                            </Grid>
+        // Sets character variable to the information related to the page
+        const characterInfo = this.props.state.character.characterById.info;
+        const characterMods = this.props.state.character.characterById.mods;
+        if (characterInfo && characterMods) {
+            return (
+                <div>
+                    {/* Grid container for log out, save buttons */}
+                    <Grid container spacing={24}>
+                        <Grid item sm={12}>
+                            <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
+                        </Grid>
+                        <Grid item sm={12} className="center-page-div">
+                            <form onSubmit={this.saveCharacter}>
+                                <label>Name:</label>
+                                <input type="text" value={this.state.name} onChange={this.handleChange} name="name"></input><br />
+                                <label> EXP: </label>
+                                <input type="text" value={this.state.exp} onChange={this.handleChange} name="exp"></input><br />
+                                <Button type="submit" variant="contained" color="primary" >Save Changes</Button>
+                            </form>
                         </Grid>
                     </Grid>
-                    {/* item containing attributes and languages */}
-                    <Grid item sm={1} className="align-left">
-                        <div>Strength</div>
-                        <br />
-                        <div><span className="attribute">{character.strength}</span> <span className="mod">+4</span></div>
-                        <br />
-                        <div>Dexterity</div>
-                        <br />
-                        <div><span className="attribute">{character.dexterity}</span> <span className="mod">+4</span></div>
-                        <br />
-                        <div>Constitution</div>
-                        <br />
-                        <div><span className="attribute">{character.constitution}</span> <span className="mod">+4</span></div>
-                        <br />
-                        <div>Intelligence</div>
-                        <br />
-                        <div><span className="attribute">{character.intelligence}</span> <span className="mod">+4</span></div>
-                        <br />
-                        <div>Wisdom</div>
-                        <br />
-                        <div><span className="attribute">{character.wisdom}</span> <span className="mod">+4</span></div>
-                        <br />
-                        <div>Charisma</div>
-                        <br />
-                        <div><span className="attribute">{character.charisma}</span> <span className="mod">+4</span></div>
-                        <br />
-                        <div>Passive Wisdom</div>
-                        <br />
-                        <div><span className="attribute">16</span></div>
-                        <br />
-                        <div>Languages</div>
-                        <div className="border">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                               Aenean diam velit, hendrerit et elit in, ultricies posuere nunc.
-                               Vivamus magna nisi
+                    {/* Grid container for character sheet */}
+                    <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className={"character-sheet"}>
+                        {/* item containing character name */}
+                        <Grid item sm={6} className="align-left border">
+                            <div>Name: {characterInfo.name}</div>
+                        </Grid>
+                        {/* item containing character info */}
+                        <Grid item sm={6} className="border">
+                            <Grid container>
+                                <Grid item lg={6} className="align-left">
+                                    <div>Class: lvl {characterInfo.lvl} {characterInfo.class_name} </div>
+                                    <div>Background: {characterInfo.background_name}</div>
+                                </Grid>
+                                <Grid item lg={6} className="align-left">
+                                    <div>Race: {characterInfo.race_name}</div>
+                                    <div>Alignment: {characterInfo.alignment_name}</div>
+                                    <div>EXP: {characterInfo.experience}</div>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        {/* item containing attributes and languages */}
+                        <Grid item sm={1} className="align-left">
+                            <div>Strength</div>
+                            <br />
+                            <div><span className="attribute">{characterInfo.strength}</span> <span className="mod">{characterMods.strengthModifier}</span></div>
+                            <br />
+                            <div>Dexterity</div>
+                            <br />
+                            <div><span className="attribute">{characterInfo.dexterity}</span> <span className="mod">{characterMods.dexterityModifier}</span></div>
+                            <br />
+                            <div>Constitution</div>
+                            <br />
+                            <div><span className="attribute">{characterInfo.constitution}</span> <span className="mod">{characterMods.constitutionModifier}</span></div>
+                            <br />
+                            <div>Intelligence</div>
+                            <br />
+                            <div><span className="attribute">{characterInfo.intelligence}</span> <span className="mod">{characterMods.intelligenceModifier}</span></div>
+                            <br />
+                            <div>Wisdom</div>
+                            <br />
+                            <div><span className="attribute">{characterInfo.wisdom}</span> <span className="mod">{characterMods.wisdomModifier}</span></div>
+                            <br />
+                            <div>Charisma</div>
+                            <br />
+                            <div><span className="attribute">{characterInfo.charisma}</span> <span className="mod">{characterMods.charismaModifier}</span></div>
+                            <br />
+                            <div>Passive Wisdom</div>
+                            <br />
+                            <div><span className="attribute">16</span></div>
+                            <br />
+                            <div>Languages</div>
+                            <div className="border">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                   Aenean diam velit, hendrerit et elit in, ultricies posuere nunc.
+                                   Vivamus magna nisi
                             </p>
-                        </div>
-                    </Grid>
-                    {/* item containing skills */}
-                    <Grid item sm={1} className="align-left">
-                        <div>
-                            <span className="attribute">0</span><span className="mod">Inspiration</span>
-                        </div>
-                        <br />
-                        <br />
-                        <div>
-                            <span className="attribute">{character.proficiency}</span><span className="mod">Proficiency</span>
-                        </div>
-                        <br />
-                        <div className="border skills">
-                            <input type="radio" />__<label>Strength</label>
-                            <br />
-                            <input type="radio" />__<label>Dexterity</label>
-                            <br />
-                            <input type="radio" />__<label>Constitution</label>
-                            <br />
-                            <input type="radio" />__<label>Intelligence</label>
-                            <br />
-                            <input type="radio" />__<label>Wisdom</label>
-                            <br />
-                            <input type="radio" />__<label>Charisma</label>
-                        </div>
-                        <div className="border skills">
-                            <input type="radio" />__<label>Acrobatics</label>
-                            <br />
-                            <input type="radio" />__<label>Animal Handling</label>
-                            <br />
-                            <input type="radio" />__<label>Arcana</label>
-                            <br />
-                            <input type="radio" />__<label>Athletics</label>
-                            <br />
-                            <input type="radio" />__<label>Deception</label>
-                            <br />
-                            <input type="radio" />__<label>History</label>
-                            <br />
-                            <input type="radio" />__<label>Insight</label>
-                            <br />
-                            <input type="radio" />__<label>Intimidation</label>
-                            <br />
-                            <input type="radio" />__<label>Investigation</label>
-                            <br />
-                            <input type="radio" />__<label>Medicine</label>
-                            <br />
-                            <input type="radio" />__<label>Nature</label>
-                            <br />
-                            <input type="radio" />__<label>Perception</label>
-                            <br />
-                            <input type="radio" />__<label>Performance</label>
-                            <br />
-                            <input type="radio" />__<label>Persuasion</label>
-                            <br />
-                            <input type="radio" />__<label>Religion</label>
-                            <br />
-                            <input type="radio" />__<label>Slight of Hand</label>
-                            <br />
-                            <input type="radio" />__<label>Stealth</label>
-                            <br />
-                            <input type="radio" />__<label>Survival</label>
-                        </div>
-                    </Grid>
-                    {/* item containing HP, attacks, and equipment */}
-                    <Grid item sm={3} >
-                        <Grid container>
-                            <Grid container className="border" justify={"space-evenly"}>
-                                <Grid item md={2}>
-                                    <p className="attribute"></p><p>AC</p>
-                                </Grid>
-                                <Grid item md={2}>
-                                    <p className="attribute"></p><p>Initiative</p>
-                                </Grid>
-                                <Grid item md={2}>
-                                    <p className="attribute">{character.speed}</p><p>Speed</p>
-                                </Grid>
-                                <Grid item md={12} className="border height-75 center-page-div">
-                                    Current HP
-                                    <p>{character.hp}</p>
-                                </Grid>
-                                <Grid item md={12} className="border height-75 center-page-div">
-                                    Temporary HP
-                                </Grid>
-                                <Grid item md={6} className="border height-75 center-page-div">
-                                    Hit Dice
-                                    <p>{character.lvl}{character.hit_dice}</p>
-                                </Grid>
-                                <Grid item md={6} className="border height-75 align-left">
-                                    Death Saves
-                                    <br />
-                                    <input type="radio" /><input type="radio" /><input type="radio" /><span>Successes</span>
-                                    <br />
-                                    <input type="radio" /><input type="radio" /><input type="radio" /><span>Failures</span>
-                                </Grid>
-                            </Grid>
-                            <p>Attacks</p>
-                            <Grid container className="border" justify={"space-evenly"}>
-                                <Grid item md={4}>
-                                    Name
-                                </Grid>
-                                <Grid item md={4}>
-                                    Bonus
-                                </Grid>
-                                <Grid item md={4}>
-                                    Damage/Type
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={4} className="border height-25">
-
-                                </Grid>
-                                <Grid item md={12} className="border height-150">
-
-                                </Grid>
-                            </Grid>
-                            <p>Equipment</p>
-                            <Grid container className="border height-150" justify={'flex-start'}></Grid>
+                            </div>
                         </Grid>
-                    </Grid>
-                    {/* item containing traits and class/race skills */}
-                    <Grid item sm={3}>
-                        <Grid container className="border" justify={"center"}>
-                            <Grid item lg={11} className="border traits">
-                                <p>Personality</p>
-                                <p>{character.personality_description}</p>
-                            </Grid>
-                            <Grid item lg={11} className="border traits">
-                                <p>Ideal</p>
-                                <p>{character.ideal_description}</p>
-                            </Grid>
-                            <Grid item lg={11} className="border traits">
-                                <p>Bond</p>
-                                <p>{character.bond_description}</p>
-                            </Grid>
-                            <Grid item lg={11} className="border traits">
-                                <p>Flaw</p>
-                                <p>{character.flaw_description}</p>
+                        {/* item containing skills */}
+                        <Grid item sm={1} className="align-left">
+                            <div>
+                                <span className="attribute">{characterInfo.inspiration}</span><span className="mod">Inspiration</span>
+                            </div>
+                            <br />
+                            <br />
+                            <div>
+                                <span className="attribute">{characterInfo.proficiency}</span><span className="mod">Proficiency</span>
+                            </div>
+                            <br />
+                            <div className="border skills">
+                                <input type="radio" />__<label>Strength</label>
+                                <br />
+                                <input type="radio" />__<label>Dexterity</label>
+                                <br />
+                                <input type="radio" />__<label>Constitution</label>
+                                <br />
+                                <input type="radio" />__<label>Intelligence</label>
+                                <br />
+                                <input type="radio" />__<label>Wisdom</label>
+                                <br />
+                                <input type="radio" />__<label>Charisma</label>
+                            </div>
+                            <div className="border skills">
+                                <input type="radio" />__<label>Acrobatics</label>
+                                <br />
+                                <input type="radio" />__<label>Animal Handling</label>
+                                <br />
+                                <input type="radio" />__<label>Arcana</label>
+                                <br />
+                                <input type="radio" />__<label>Athletics</label>
+                                <br />
+                                <input type="radio" />__<label>Deception</label>
+                                <br />
+                                <input type="radio" />__<label>History</label>
+                                <br />
+                                <input type="radio" />__<label>Insight</label>
+                                <br />
+                                <input type="radio" />__<label>Intimidation</label>
+                                <br />
+                                <input type="radio" />__<label>Investigation</label>
+                                <br />
+                                <input type="radio" />__<label>Medicine</label>
+                                <br />
+                                <input type="radio" />__<label>Nature</label>
+                                <br />
+                                <input type="radio" />__<label>Perception</label>
+                                <br />
+                                <input type="radio" />__<label>Performance</label>
+                                <br />
+                                <input type="radio" />__<label>Persuasion</label>
+                                <br />
+                                <input type="radio" />__<label>Religion</label>
+                                <br />
+                                <input type="radio" />__<label>Slight of Hand</label>
+                                <br />
+                                <input type="radio" />__<label>Stealth</label>
+                                <br />
+                                <input type="radio" />__<label>Survival</label>
+                            </div>
+                        </Grid>
+                        {/* item containing HP, attacks, and equipment */}
+                        <Grid item sm={3} >
+                            <Grid container>
+                                <Grid container className="border" justify={"space-evenly"}>
+                                    <Grid item md={2}>
+                                        <p className="attribute"></p><p>AC</p>
+                                    </Grid>
+                                    <Grid item md={2}>
+                                        <p className="attribute"></p><p>Initiative</p>
+                                    </Grid>
+                                    <Grid item md={2}>
+                                        <p className="attribute">{characterInfo.speed}</p><p>Speed</p>
+                                    </Grid>
+                                    <Grid item md={12} className="border height-75 center-page-div">
+                                        Current HP
+                                    <p>{characterInfo.hp}</p>
+                                    </Grid>
+                                    <Grid item md={12} className="border height-75 center-page-div">
+                                        Temporary HP
+                                </Grid>
+                                    <Grid item md={6} className="border height-75 center-page-div">
+                                        Hit Dice
+                                    <p>{characterInfo.lvl}{characterInfo.hit_dice}</p>
+                                    </Grid>
+                                    <Grid item md={6} className="border height-75 align-left">
+                                        Death Saves
+                                    <br />
+                                        <input type="radio" /><input type="radio" /><input type="radio" /><span>Successes</span>
+                                        <br />
+                                        <input type="radio" /><input type="radio" /><input type="radio" /><span>Failures</span>
+                                    </Grid>
+                                </Grid>
+                                <p>Attacks</p>
+                                <Grid container className="border" justify={"space-evenly"}>
+                                    <Grid item md={4}>
+                                        Name
+                                </Grid>
+                                    <Grid item md={4}>
+                                        Bonus
+                                </Grid>
+                                    <Grid item md={4}>
+                                        Damage/Type
+                                </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={4} className="border height-25">
+
+                                    </Grid>
+                                    <Grid item md={12} className="border height-150">
+
+                                    </Grid>
+                                </Grid>
+                                <p>Equipment</p>
+                                <Grid container className="border height-150" justify={'flex-start'}></Grid>
                             </Grid>
                         </Grid>
-                        <br />
-                        <Grid container className="border max-height">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                               Nulla sed est velit. Integer pretium leo eu varius cursus.
-                               Praesent faucibus nulla quis libero fringilla, a aliquet
-                               est pulvinar. Integer malesuada lobortis nibh nec porttitor.
-                               Pellentesque at lobortis ipsum, ut pretium orci. Duis vitae
-                               tristique velit. Nulla id scelerisque risus, vel dapibus dolor.
-                               Etiam eget dignissim risus.
+                        {/* item containing traits and class/race skills */}
+                        <Grid item sm={3}>
+                            <Grid container className="border" justify={"center"}>
+                                <Grid item lg={11} className="border traits">
+                                    <p>Personality</p>
+                                    <p>{characterInfo.personality_description}</p>
+                                </Grid>
+                                <Grid item lg={11} className="border traits">
+                                    <p>Ideal</p>
+                                    <p>{characterInfo.ideal_description}</p>
+                                </Grid>
+                                <Grid item lg={11} className="border traits">
+                                    <p>Bond</p>
+                                    <p>{characterInfo.bond_description}</p>
+                                </Grid>
+                                <Grid item lg={11} className="border traits">
+                                    <p>Flaw</p>
+                                    <p>{characterInfo.flaw_description}</p>
+                                </Grid>
+                            </Grid>
+                            <br />
+                            <Grid container className="border max-height">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                   Nulla sed est velit. Integer pretium leo eu varius cursus.
+                                   Praesent faucibus nulla quis libero fringilla, a aliquet
+                                   est pulvinar. Integer malesuada lobortis nibh nec porttitor.
+                                   Pellentesque at lobortis ipsum, ut pretium orci. Duis vitae
+                                   tristique velit. Nulla id scelerisque risus, vel dapibus dolor.
+                                   Etiam eget dignissim risus.
                             </p>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </div >
-        );
+                </div >
+            );
+        }
+        else {
+            return <p>loading...</p>
+        }
     }
 }
 
