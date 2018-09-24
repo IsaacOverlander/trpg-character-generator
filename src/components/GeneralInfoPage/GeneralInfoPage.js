@@ -43,6 +43,7 @@ class GeneralInfoPage extends Component {
                                     <p>Race: Halfling</p>
                                     <Button variant="contained" color="primary" onClick={this.toSampleOne}>View</Button>
                                 </Card>
+                                <br></br>
                                 <Card>
                                     <h4>Greybeard the Flamecaster!</h4>
                                     <p>Class: Wizard</p>

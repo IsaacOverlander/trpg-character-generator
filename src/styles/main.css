@@ -1,11 +1,21 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: grey;
 }
 
 .info-paragraph {
     width: 50%;
     margin-left: 0%;
     margin-right: 50%;
+}
+
+.save-form {
+    background-color: #dbd5d5;
+    width: 30%;
+    height: 50%;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 2px;
 }
 
 .attribute {
@@ -79,8 +89,11 @@ body {
 }
 
 .character-sheet {
-    height: 100%;
+    width: 85%;
+    height: 95%;
     border: solid 1px black;
+    background-color: white;
+
 }
 
 .instructions h1 {
@@ -111,9 +124,9 @@ body {
 }
 
 .instructions {
-    background-color: #00acb0;
+    background-color: black;
     padding: 5px;
-    color: #ece7e7;
+    color: red;
 }
 
 .sample-characters {
@@ -171,7 +184,7 @@ input[type="submit"] {
 }
 
 .navbar {
-  background-color: #00acb0;
+  background-color: black;
   width: 100%;
   border-radius: 0px;
 }

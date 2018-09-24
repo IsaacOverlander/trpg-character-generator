@@ -45,6 +45,7 @@ function* setModifiers(action) {
             charismaModifier: charismaMod,
             passiveWisdom: passiveWisdom,
             ac: armorClass,
+            isChecked: true,
         }
     }
     yield put({type: 'SET_CHARACTER_BY_ID', payload: character})

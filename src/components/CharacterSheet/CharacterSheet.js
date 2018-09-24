@@ -68,13 +68,13 @@ class CharacterSheet extends Component {
         if (characterInfo && characterMods) {
             return (
                 <div>
-                    {/* Grid container for log out, save buttons */}
+                    {/* Grid container for log out button and save form */}
                     <Grid container spacing={24}>
                         <Grid item sm={12}>
                             <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
                         </Grid>
                         <Grid item sm={12} className="center-page-div">
-                            <form onSubmit={this.saveCharacter}>
+                            <form onSubmit={this.saveCharacter} className="save-form">
                                 <label>Name:</label>
                                 <input type="text" value={this.state.name} onChange={this.handleChange} name="name"></input><br />
                                 <label> EXP: </label>
@@ -84,7 +84,7 @@ class CharacterSheet extends Component {
                         </Grid>
                     </Grid>
                     {/* Grid container for character sheet */}
-                    <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className={"character-sheet"}>
+                    <Grid container spacing={24} alignItems={"flex-start"} justify={"space-evenly"} className="character-sheet">
                         {/* item containing character name */}
                         <Grid item sm={6} className="align-left border">
                             <div>Name: {characterInfo.name}</div>
@@ -153,17 +153,17 @@ class CharacterSheet extends Component {
                             </div>
                             <br />
                             <div className="border skills">
-                                <input type="radio" />__<label>Strength</label>
+                                <input type="radio" checked={characterInfo.saving_throws[0]}/>__<label>Strength</label>
                                 <br />
-                                <input type="radio" />__<label>Dexterity</label>
+                                <input type="radio" checked={characterInfo.saving_throws[1]}/>__<label>Dexterity</label>
                                 <br />
-                                <input type="radio" />__<label>Constitution</label>
+                                <input type="radio" checked={characterInfo.saving_throws[2]}/>__<label>Constitution</label>
                                 <br />
-                                <input type="radio" />__<label>Intelligence</label>
+                                <input type="radio" checked={characterInfo.saving_throws[3]}/>__<label>Intelligence</label>
                                 <br />
-                                <input type="radio" />__<label>Wisdom</label>
+                                <input type="radio" checked={characterInfo.saving_throws[4]}/>__<label>Wisdom</label>
                                 <br />
-                                <input type="radio" />__<label>Charisma</label>
+                                <input type="radio" checked={characterInfo.saving_throws[5]}/>__<label>Charisma</label>
                             </div>
                             <div className="border skills">
                                 <input type="radio" />__<label>Acrobatics</label>
