@@ -17,7 +17,12 @@ function* getCharacters() {
 function* getCharacterById(action) {
     try {
         const characterById = yield call(axios.get, `/api/character/${action.payload}`);
-        yield put({type: 'SET_MODS', payload: characterById});
+        const characterSkills = yield call(axios.get, `/api/character/skills?class=${characterById.data.class_name}&background=${characterById.data.background_name}`);
+        const characterToSet = {
+            character: characterById,
+            skills: characterSkills, // {classSkills: [], backgroundSkills: []}
+        };
+        yield put({ type: 'SET_MODS', payload: characterToSet });
     } catch (error) {
         alert('There was an error getting your character!');
         console.log(error);
@@ -25,17 +30,18 @@ function* getCharacterById(action) {
 }
 
 function* setModifiers(action) {
-    const modifiers = yield ['-5','-4','-4','-3','-3','-2','-2','-1','-1','+0','+0','+1','+1','+2','+2','+3','+3','+4','+4','+5'];
-    const strengthMod = yield modifiers[action.payload.data.strength - 1];
-    const dexterityMod = yield modifiers[action.payload.data.dexterity - 1];
-    const constitutionMod = yield modifiers[action.payload.data.constitution - 1];
-    const intelligenceMod = yield modifiers[action.payload.data.intelligence - 1];
-    const wisdomMod = yield modifiers[action.payload.data.wisdom - 1];
-    const charismaMod = yield modifiers[action.payload.data.charisma - 1];
+    const modifiers = yield ['-5', '-4', '-4', '-3', '-3', '-2', '-2', '-1', '-1', '+0', '+0', '+1', '+1', '+2', '+2', '+3', '+3', '+4', '+4', '+5'];
+    const strengthMod = yield modifiers[action.payload.character.data.strength - 1];
+    const dexterityMod = yield modifiers[action.payload.character.data.dexterity - 1];
+    const constitutionMod = yield modifiers[action.payload.character.data.constitution - 1];
+    const intelligenceMod = yield modifiers[action.payload.character.data.intelligence - 1];
+    const wisdomMod = yield modifiers[action.payload.character.data.wisdom - 1];
+    const charismaMod = yield modifiers[action.payload.character.data.charisma - 1];
     const passiveWisdom = yield 10 + Number(wisdomMod);
     const armorClass = yield 10 + Number(dexterityMod);
     const character = yield {
-        info: action.payload.data,
+        info: action.payload.character.data,
+        skills: action.payload.skills.data,
         mods: {
             strengthModifier: strengthMod,
             dexterityModifier: dexterityMod,
@@ -48,7 +54,7 @@ function* setModifiers(action) {
             isChecked: true,
         }
     }
-    yield put({type: 'SET_CHARACTER_BY_ID', payload: character})
+    yield put({ type: 'SET_CHARACTER_BY_ID', payload: character })
 };
 
 // Function to send a POST request to add a character to the database
@@ -98,7 +104,7 @@ function* getRaces() {
 function* updateCharacter(action) {
     try {
         yield call(axios.put, `/api/character/update/${action.payload.id}`, action.payload);
-        yield put({type: 'GET_CHARACTER_BY_ID', payload: action.payload.id})
+        yield put({ type: 'GET_CHARACTER_BY_ID', payload: action.payload.id })
     } catch (error) {
         alert('There was an error updating your character!');
         console.log(error);

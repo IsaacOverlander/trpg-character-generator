@@ -65,7 +65,9 @@ class CharacterSheet extends Component {
         // Sets character variable to the information related to the page
         const characterInfo = this.props.state.character.characterById.info;
         const characterMods = this.props.state.character.characterById.mods;
-        if (characterInfo && characterMods) {
+        const characterSkills = this.props.state.character.characterById.skills;
+        
+        if (characterInfo && characterMods && characterSkills) {
             return (
                 <div>
                     {/* Grid container for log out button and save form */}
@@ -153,54 +155,54 @@ class CharacterSheet extends Component {
                             </div>
                             <br />
                             <div className="border skills">
-                                <input type="radio" checked={characterInfo.saving_throws[0]}/>__<label>Strength</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[0]}/>__<label>Strength</label>
                                 <br />
-                                <input type="radio" checked={characterInfo.saving_throws[1]}/>__<label>Dexterity</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[1]}/>__<label>Dexterity</label>
                                 <br />
-                                <input type="radio" checked={characterInfo.saving_throws[2]}/>__<label>Constitution</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[2]}/>__<label>Constitution</label>
                                 <br />
-                                <input type="radio" checked={characterInfo.saving_throws[3]}/>__<label>Intelligence</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[3]}/>__<label>Intelligence</label>
                                 <br />
-                                <input type="radio" checked={characterInfo.saving_throws[4]}/>__<label>Wisdom</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[4]}/>__<label>Wisdom</label>
                                 <br />
-                                <input type="radio" checked={characterInfo.saving_throws[5]}/>__<label>Charisma</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[5]}/>__<label>Charisma</label>
                             </div>
                             <div className="border skills">
-                                <input type="radio" />__<label>Acrobatics</label>
+                                <input type="radio" readOnly />__<label>Acrobatics</label>
                                 <br />
-                                <input type="radio" />__<label>Animal Handling</label>
+                                <input type="radio" readOnly />__<label>Animal Handling</label>
                                 <br />
-                                <input type="radio" />__<label>Arcana</label>
+                                <input type="radio" readOnly />__<label>Arcana</label>
                                 <br />
-                                <input type="radio" />__<label>Athletics</label>
+                                <input type="radio" readOnly />__<label>Athletics</label>
                                 <br />
-                                <input type="radio" />__<label>Deception</label>
+                                <input type="radio" readOnly />__<label>Deception</label>
                                 <br />
-                                <input type="radio" />__<label>History</label>
+                                <input type="radio" readOnly />__<label>History</label>
                                 <br />
-                                <input type="radio" />__<label>Insight</label>
+                                <input type="radio" readOnly />__<label>Insight</label>
                                 <br />
-                                <input type="radio" />__<label>Intimidation</label>
+                                <input type="radio" readOnly />__<label>Intimidation</label>
                                 <br />
-                                <input type="radio" />__<label>Investigation</label>
+                                <input type="radio" readOnly />__<label>Investigation</label>
                                 <br />
-                                <input type="radio" />__<label>Medicine</label>
+                                <input type="radio" readOnly />__<label>Medicine</label>
                                 <br />
-                                <input type="radio" />__<label>Nature</label>
+                                <input type="radio" readOnly />__<label>Nature</label>
                                 <br />
-                                <input type="radio" />__<label>Perception</label>
+                                <input type="radio" readOnly />__<label>Perception</label>
                                 <br />
-                                <input type="radio" />__<label>Performance</label>
+                                <input type="radio" readOnly />__<label>Performance</label>
                                 <br />
-                                <input type="radio" />__<label>Persuasion</label>
+                                <input type="radio" readOnly />__<label>Persuasion</label>
                                 <br />
-                                <input type="radio" />__<label>Religion</label>
+                                <input type="radio" readOnly />__<label>Religion</label>
                                 <br />
-                                <input type="radio" />__<label>Slight of Hand</label>
+                                <input type="radio" readOnly />__<label>Slight of Hand</label>
                                 <br />
-                                <input type="radio" />__<label>Stealth</label>
+                                <input type="radio" readOnly />__<label>Stealth</label>
                                 <br />
-                                <input type="radio" />__<label>Survival</label>
+                                <input type="radio" readOnly />__<label>Survival</label>
                             </div>
                         </Grid>
                         {/* item containing HP, attacks, and equipment */}

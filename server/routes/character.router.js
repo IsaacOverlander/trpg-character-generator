@@ -52,6 +52,37 @@ router.get('/race', (req, res) => {
     };
 });
 
+router.get('/skills', (req, res) => {
+    if(req.isAuthenticated()) {
+        const queryOne = `SELECT "skill"."skill" FROM "class_skill" 
+                          JOIN "class" on "class_id" = "class"."id"
+                          JOIN "skill" on "skill_id" = "skill"."id"
+                          WHERE "class_name" = $1;`;
+        const queryTwo = `SELECT "skill"."skill" FROM "background_skill"
+                          JOIN "background" on "background_id" = "background"."id"
+                          JOIN "skill" on "skill_id" = "skill"."id"
+                          WHERE "background_name" = $1;`;
+        pool.query(queryOne, [req.query.class]).then((resultOne) => {
+            pool.query(queryTwo, [req.query.background]).then((resultTwo) => {
+                result = {
+                    classSkills: resultOne.rows,
+                    backgroundSkills: resultTwo.rows,
+                }
+                res.send(result);
+            }).catch((error) => {
+                console.log('ERROR: backgrounds', error);
+                res.sendStatus(500);
+            })
+        }).catch((error) => {
+            console.log('ERROR: classes', error);
+            res.sendStatus(500);
+        })
+    }
+    else {
+        res.send('You are not logged in!');
+    }
+})
+
 // PUT route for updating characters
 router.put('/update/:id', (req, res) => {
     if (req.isAuthenticated()) {
