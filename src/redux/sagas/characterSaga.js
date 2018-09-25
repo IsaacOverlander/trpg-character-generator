@@ -1,4 +1,5 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
+import classSkillSelector from '../../components/AddCharacter/classSkillSelector';
 import axios from 'axios';
 
 // Function to send a GET request for all characters by user_id
@@ -12,15 +13,12 @@ function* getCharacters() {
         console.log(error);
     }
 }
-
 // Function to send a Get request for a specific character
 function* getCharacterById(action) {
     try {
         const characterById = yield call(axios.get, `/api/character/${action.payload}`);
-        const characterSkills = yield call(axios.get, `/api/character/skills?class=${characterById.data.class_name}&background=${characterById.data.background_name}`);
         const characterToSet = {
             character: characterById,
-            skills: characterSkills, // {classSkills: [], backgroundSkills: []}
         };
         yield put({ type: 'SET_MODS', payload: characterToSet });
     } catch (error) {
@@ -28,7 +26,7 @@ function* getCharacterById(action) {
         console.log(error);
     }
 }
-
+// Function to set a specific characters modifiers
 function* setModifiers(action) {
     const modifiers = yield ['-5', '-4', '-4', '-3', '-3', '-2', '-2', '-1', '-1', '+0', '+0', '+1', '+1', '+2', '+2', '+3', '+3', '+4', '+4', '+5'];
     const strengthMod = yield modifiers[action.payload.character.data.strength - 1];
@@ -41,7 +39,6 @@ function* setModifiers(action) {
     const armorClass = yield 10 + Number(dexterityMod);
     const character = yield {
         info: action.payload.character.data,
-        skills: action.payload.skills.data,
         mods: {
             strengthModifier: strengthMod,
             dexterityModifier: dexterityMod,
@@ -56,7 +53,6 @@ function* setModifiers(action) {
     }
     yield put({ type: 'SET_CHARACTER_BY_ID', payload: character })
 };
-
 // Function to send a POST request to add a character to the database
 function* generateCharacter(action) {
     try {
@@ -66,7 +62,6 @@ function* generateCharacter(action) {
         console.log(error);
     }
 }
-
 // Function to send a DELETE request to remove specific characters from the database
 function* deleteCharacter(action) {
     try {
@@ -77,7 +72,6 @@ function* deleteCharacter(action) {
         console.log(error);
     }
 }
-
 // Function to send a GET request to populate dropdowns
 function* getClasses() {
     try {
@@ -88,7 +82,25 @@ function* getClasses() {
         console.log(error);
     }
 }
-
+// Function to GET skills to determine characters skill proficiencies
+function* getClassSkills(action) {
+    try {
+        //Sets all skills to false to allow accurate proficiency calculations
+        yield call (axios.put, '/api/character/update/false')
+        const skills = yield call(axios.get, `/api/character/skills?class=${action.payload}`);
+        const characterSkills = {id: action.payload, skills: skills.data}
+        yield put({type: 'SET_PROFICIENCIES', payload: characterSkills});
+    }
+    catch (error) {
+        alert('There was an error!');
+        console.log(error);
+    }
+}
+// Function to set proficient skills
+function* setProficienies(action) {
+    const skillList = yield classSkillSelector(action.payload.id, action.payload.skills);
+    yield call(axios.put, '/api/character/update/true', skillList);
+}
 // Function to send a GET request to populate dropdowns
 function* getRaces() {
     try {
@@ -99,7 +111,6 @@ function* getRaces() {
         console.log(error);
     }
 }
-
 // Function for updating characters
 function* updateCharacter(action) {
     try {
@@ -120,6 +131,8 @@ function* characterSaga() {
     yield takeLatest('CREATE_CHARACTER', generateCharacter);
     yield takeLatest('UPDATE_CHARACTER', updateCharacter);
     yield takeLatest('SET_MODS', setModifiers);
+    yield takeLatest('GET_CLASS_SKILLS', getClassSkills);
+    yield takeLatest('SET_PROFICIENCIES', setProficienies);
 }
 
 export default characterSaga;

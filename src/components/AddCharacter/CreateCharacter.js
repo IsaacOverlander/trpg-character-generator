@@ -1,5 +1,4 @@
 import d20 from 'd20/d20';
-
 // Function for randomizing charater data
 const createCharacter = () => {
     const backgroundToCreate = d20.roll('1d18');

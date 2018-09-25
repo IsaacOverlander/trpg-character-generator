@@ -54,20 +54,20 @@ class CharacterSheet extends Component {
     saveCharacter = (event) => {
         event.preventDefault();
         this.props.dispatch({ type: 'UPDATE_CHARACTER', payload: this.state });
+        swal('Chracter has been updated!');
         this.setState({
             ...this.state,
             name: '',
             exp: '',
-        })
+        });
     }
 
     render() {
         // Sets character variable to the information related to the page
         const characterInfo = this.props.state.character.characterById.info;
         const characterMods = this.props.state.character.characterById.mods;
-        const characterSkills = this.props.state.character.characterById.skills;
         
-        if (characterInfo && characterMods && characterSkills) {
+        if (characterInfo && characterMods) {
             return (
                 <div>
                     {/* Grid container for log out button and save form */}

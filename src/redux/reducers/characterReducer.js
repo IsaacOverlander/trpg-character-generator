@@ -10,7 +10,6 @@ const characters = (state = [], action) => {
             return state
     }
 }
-
 // Sets character by character_id
 const characterById = (state = {}, action) => {
     if (action.type === 'SET_CHARACTER_BY_ID'){
@@ -18,7 +17,6 @@ const characterById = (state = {}, action) => {
     }
     return state;
 }
-
 // Sets classes for dropdown
 const classes = (state = [], action) => {
     if(action.type === 'SET_CLASSES') {
@@ -26,10 +24,16 @@ const classes = (state = [], action) => {
     }
     return state;
 }
-
 // Sets races for dropdown
 const races = (state = [], action) => {
     if(action.type === 'SET_RACES') {
+        return action.payload;
+    }
+    return state;
+}
+// Sets skills for determining proficiencies
+const skills = (state = [], action) => {
+    if (action.type === 'SET_SKILLS') {
         return action.payload;
     }
     return state;
@@ -38,6 +42,7 @@ const races = (state = [], action) => {
 export default combineReducers({
     characterById,
     characters,
-    classes, 
+    classes,
+    skills,
     races,
 });

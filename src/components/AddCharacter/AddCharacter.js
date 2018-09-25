@@ -13,29 +13,29 @@ const mapStateToProps = state => ({
 
 class AddCharacter extends Component {
 
-constructor() {
-    super();
-    // this.state properties match database "character" columns
-    this.state = {
-        class_id: '',
-        background_id: '',
-        race_id: '',
-        alignment_id: '',
-        personality_id: '',
-        ideal_id: '',
-        bond_id: '',
-        flaw_id: '',
-        name: '',
-        strength: '',
-        dexterity: '',
-        constitution: '',
-        intelligence: '',
-        wisdom: '',
-        charisma: '',
-        inspiration: '',
-        proficiency: '',
+    constructor() {
+        super();
+        // this.state properties match database "character" columns
+        this.state = {
+            class_id: '',
+            background_id: '',
+            race_id: '',
+            alignment_id: '',
+            personality_id: '',
+            ideal_id: '',
+            bond_id: '',
+            flaw_id: '',
+            name: '',
+            strength: '',
+            dexterity: '',
+            constitution: '',
+            intelligence: '',
+            wisdom: '',
+            charisma: '',
+            inspiration: '',
+            proficiency: '',
+        }
     }
-}
 
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
@@ -65,21 +65,30 @@ constructor() {
 
     // function for sending generated character to the database
     generateCharacter = () => {
-        this.props.dispatch({type: 'CREATE_CHARACTER', payload: this.state});
+        this.props.dispatch({ type: 'CREATE_CHARACTER', payload: this.state });
         swal('Character was created').then(() => {
             this.props.history.push('main');
         })
     }
 
     handleChange = (event) => {
-        this.setState({
-            ...this.state,
-            [event.target.name]: event.target.value,
-        });
+        if (event.target.name === 'class_id') {
+            // Gets skills to determine proficiencies
+            this.props.dispatch({ type: 'GET_CLASS_SKILLS', payload: event.target.value });
+            this.setState({
+                ...this.state,
+                [event.target.name]: event.target.value,
+            });
+        }
+        else {
+            this.setState({
+                ...this.state,
+                [event.target.name]: event.target.value,
+            });
+        }
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="center-page-div">
                 <br />

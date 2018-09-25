@@ -1,7 +1,6 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-
 // GET rout for displaying characters on main page
 router.get('/', (req, res) => {
     if (req.isAuthenticated()) {
@@ -35,7 +34,6 @@ router.get('/class', (req, res) => {
         res.send('You are not logged in!');
     };
 });
-
 // GET route for populating races drop down
 router.get('/race', (req, res) => {
     if (req.isAuthenticated()) {
@@ -51,28 +49,15 @@ router.get('/race', (req, res) => {
         res.send('You are not logged in!');
     };
 });
-
+// GET route for character skills
 router.get('/skills', (req, res) => {
     if(req.isAuthenticated()) {
-        const queryOne = `SELECT "skill"."skill" FROM "class_skill" 
+        const query = `SELECT "skill"."skill" FROM "class_skill" 
                           JOIN "class" on "class_id" = "class"."id"
                           JOIN "skill" on "skill_id" = "skill"."id"
-                          WHERE "class_name" = $1;`;
-        const queryTwo = `SELECT "skill"."skill" FROM "background_skill"
-                          JOIN "background" on "background_id" = "background"."id"
-                          JOIN "skill" on "skill_id" = "skill"."id"
-                          WHERE "background_name" = $1;`;
-        pool.query(queryOne, [req.query.class]).then((resultOne) => {
-            pool.query(queryTwo, [req.query.background]).then((resultTwo) => {
-                result = {
-                    classSkills: resultOne.rows,
-                    backgroundSkills: resultTwo.rows,
-                }
-                res.send(result);
-            }).catch((error) => {
-                console.log('ERROR: backgrounds', error);
-                res.sendStatus(500);
-            })
+                          WHERE "class_id" = $1;`;
+        pool.query(query, [req.query.class]).then((result) => {
+                res.send(result.rows);
         }).catch((error) => {
             console.log('ERROR: classes', error);
             res.sendStatus(500);
@@ -81,8 +66,39 @@ router.get('/skills', (req, res) => {
     else {
         res.send('You are not logged in!');
     }
+});
+// PUT route for setting skills as true
+router.put('/update/true', (req, res) => {
+    if (req.isAuthenticated()) {
+        let query = `UPDATE "skill" SET "skill_value" = 'true' WHERE "skill" = $1;`;
+        for(let skill of req.body) {
+            pool.query(query, [skill]).then((result) => {
+                res.sendStatus(200);
+            }).catch((error) => {
+                console.log('ERROR: skills', error);
+                res.sendStatus(500);
+            })
+        }
+    }
+    else {
+        res.send('You are not logged in!');
+    }
 })
-
+// PUT route for setting skills back to false
+router.put('/update/false', (req, res) => {
+    if (req.isAuthenticated()) {
+        const query = `UPDATE "skill" SET "skill_value" = 'false';`;
+        pool.query(query).then((result) => {
+            res.sendStatus(200);
+        }).catch((error) => {
+            console.log('ERROR', error);
+            res.sendStatus(500);
+        })
+    }
+    else {
+        res.send('You are not logged in!');
+    }
+});
 // PUT route for updating characters
 router.put('/update/:id', (req, res) => {
     if (req.isAuthenticated()) {
@@ -97,8 +113,7 @@ router.put('/update/:id', (req, res) => {
     else {
         res.send('You are not logged in!');
     };
-})
-
+});
 // DELETE route for removing characters
 router.delete('/:id', (req, res) => {
     if (req.isAuthenticated()) {
@@ -113,8 +128,7 @@ router.delete('/:id', (req, res) => {
     else {
         res.send('You are not logged in!');
     };
-})
-
+});
 // POST route for adding characters
 router.post('/create', (req, res) => {
     if (req.isAuthenticated()) {
@@ -139,7 +153,6 @@ router.post('/create', (req, res) => {
 
     }
 });
-
 // GET route for individual characters
 router.get('/:id', (req, res) => {
     if (req.isAuthenticated()) {
@@ -164,6 +177,6 @@ router.get('/:id', (req, res) => {
     else {
         res.send('You are not logged in')
     }
-})
+});
 
 module.exports = router;
