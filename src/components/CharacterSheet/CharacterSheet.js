@@ -168,41 +168,41 @@ class CharacterSheet extends Component {
                                 <input type="radio" readOnly checked={characterInfo.saving_throws[5]}/>__<label>Charisma</label>
                             </div>
                             <div className="border skills">
-                                <input type="radio" readOnly />__<label>Acrobatics</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[0]} />__<label>Acrobatics</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Animal Handling</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[1]} />__<label>Animal Handling</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Arcana</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[2]} />__<label>Arcana</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Athletics</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[3]} />__<label>Athletics</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Deception</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[4]} />__<label>Deception</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>History</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[5]} />__<label>History</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Insight</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[6]} />__<label>Insight</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Intimidation</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[7]} />__<label>Intimidation</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Investigation</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[8]} />__<label>Investigation</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Medicine</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[9]} />__<label>Medicine</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Nature</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[10]} />__<label>Nature</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Perception</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[11]} />__<label>Perception</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Performance</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[12]} />__<label>Performance</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Persuasion</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[13]} />__<label>Persuasion</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Religion</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[14]} />__<label>Religion</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Slight of Hand</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[15]} />__<label>Slight of Hand</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Stealth</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[16]} />__<label>Stealth</label>
                                 <br />
-                                <input type="radio" readOnly />__<label>Survival</label>
+                                <input type="radio" readOnly checked={characterInfo.character_skills[17]} />__<label>Survival</label>
                             </div>
                         </Grid>
                         {/* item containing HP, attacks, and equipment */}

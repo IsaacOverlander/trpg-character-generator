@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 import { triggerLogout } from '../../redux/actions/loginActions';
 import Button from '@material-ui/core/Button';
-import createCharacter from './CreateCharacter';
 import swal from '../../../node_modules/sweetalert';
+import createStats from './CreateCharacter';
 
 const mapStateToProps = state => ({
     user: state.user,
     state,
 });
 
-class AddCharacter extends Component {
 
-    constructor() {
-        super();
+class AddCharacter extends Component {
+    constructor(props) {
+        super(props);
         // this.state properties match database "character" columns
         this.state = {
             class_id: '',
@@ -34,6 +34,7 @@ class AddCharacter extends Component {
             charisma: '',
             inspiration: '',
             proficiency: '',
+            skills: [],
         }
     }
 
@@ -43,13 +44,36 @@ class AddCharacter extends Component {
         this.props.dispatch({ type: 'GET_CLASSES' });
         // Gets races to populate dropdown
         this.props.dispatch({ type: 'GET_RACES' });
-        // randomizes properties then sets state
-        this.setState(createCharacter());
+        this.setState(createStats());
     }
 
     componentDidUpdate() {
         if (!this.props.user.isLoading && this.props.user.userName === null) {
             this.props.history.push('home');
+        }
+        if (this.props.state.character.skills.length !== 0 && this.state.skills.length === 0) {
+            const skill = this.props.state.character.skills;
+            this.setState({
+                ...this.state,
+                skills: [skill[0].skill_value,
+                         skill[1].skill_value,
+                         skill[2].skill_value,
+                         skill[3].skill_value,
+                         skill[4].skill_value,
+                         skill[5].skill_value,
+                         skill[6].skill_value,
+                         skill[7].skill_value,
+                         skill[8].skill_value,
+                         skill[9].skill_value,
+                         skill[10].skill_value,
+                         skill[11].skill_value,
+                         skill[12].skill_value,
+                         skill[13].skill_value,
+                         skill[14].skill_value,
+                         skill[15].skill_value,
+                         skill[16].skill_value,
+                         skill[17].skill_value,],
+            });
         }
     }
 
@@ -75,26 +99,20 @@ class AddCharacter extends Component {
         if (event.target.name === 'class_id') {
             // Gets skills to determine proficiencies
             this.props.dispatch({ type: 'GET_CLASS_SKILLS', payload: event.target.value });
-            this.setState({
-                ...this.state,
-                [event.target.name]: event.target.value,
-            });
         }
-        else {
-            this.setState({
-                ...this.state,
-                [event.target.name]: event.target.value,
-            });
-        }
+        this.setState({
+            ...this.state,
+            [event.target.name]: event.target.value,
+        });
     }
 
     render() {
+        console.log(this.state);
         return (
             <div className="center-page-div">
                 <br />
-                {/* Log out button */}
+                {/* Log out button and Back button */}
                 <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
-                {/* Back button */}
                 <Button variant="contained" color="primary" className="back" onClick={this.back}>Back</Button>
                 <h3>AddCharacter</h3>
                 <form>

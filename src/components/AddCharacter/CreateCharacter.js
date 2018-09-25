@@ -1,6 +1,6 @@
 import d20 from 'd20/d20';
-// Function for randomizing charater data
-const createCharacter = () => {
+
+const createStats = () => {
     const backgroundToCreate = d20.roll('1d18');
     const alignmentToCreate = d20.roll('1d8');
     const personalityToCreate = d20.roll('1d104');
@@ -33,8 +33,7 @@ const createCharacter = () => {
         charisma: charismaToCreate,
         inspiration: 0,
         proficiency: 2,
-    }
+    };
 }
 
-
-export default createCharacter;
+export default createStats;

@@ -49,8 +49,23 @@ router.get('/race', (req, res) => {
         res.send('You are not logged in!');
     };
 });
-// GET route for character skills
+// GET route for all skills
 router.get('/skills', (req, res) => {
+    if (req.isAuthenticated()) {
+        const query = `SELECT * FROM "skill" ORDER BY "skill"."skill";`;
+        pool.query(query).then((result) => {
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('ERROR', error);
+            res.sendStatus(500);            
+        })
+    }
+    else {
+        res.send('You are not logged in!');
+    }
+})
+// GET route for character skills
+router.get('/skills/class', (req, res) => {
     if(req.isAuthenticated()) {
         const query = `SELECT "skill"."skill" FROM "class_skill" 
                           JOIN "class" on "class_id" = "class"."id"
@@ -59,7 +74,7 @@ router.get('/skills', (req, res) => {
         pool.query(query, [req.query.class]).then((result) => {
                 res.send(result.rows);
         }).catch((error) => {
-            console.log('ERROR: classes', error);
+            console.log('ERROR', error);
             res.sendStatus(500);
         })
     }
@@ -71,13 +86,20 @@ router.get('/skills', (req, res) => {
 router.put('/update/true', (req, res) => {
     if (req.isAuthenticated()) {
         let query = `UPDATE "skill" SET "skill_value" = 'true' WHERE "skill" = $1;`;
+        console.log(req.body);
+        // TODO: Switch to async await
+        let i = 0;
         for(let skill of req.body) {
-            pool.query(query, [skill]).then((result) => {
-                res.sendStatus(200);
+            pool.query(query, [skill]).then(() => {
+                i++;
+                if(i === req.body.length) {
+                    res.sendStatus(200);
+                }
+                console.log(skill);
             }).catch((error) => {
                 console.log('ERROR: skills', error);
                 res.sendStatus(500);
-            })
+            });
         }
     }
     else {
@@ -136,12 +158,12 @@ router.post('/create', (req, res) => {
         const query = `INSERT INTO "character" ("person_id", "class_id", "background_id", "race_id",
                                                 "alignment_id", "personality_id", "ideal_id", "bond_id", 
                                                 "flaw_id", "name", "strength", "dexterity", "constitution", 
-                                                "intelligence", "wisdom", "charisma", "inspiration", "proficiency")
-                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18);`;
+                                                "intelligence", "wisdom", "charisma", "inspiration", "proficiency", "character_skills")
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19);`;
         pool.query(query, [req.user.id, req.body.class_id, req.body.background_id, req.body.race_id, req.body.alignment_id,
         req.body.personality_id, req.body.ideal_id, req.body.bond_id, req.body.flaw_id, req.body.name,
         req.body.strength, req.body.dexterity, req.body.constitution, req.body.intelligence, req.body.wisdom,
-        req.body.charisma, req.body.inspiration, req.body.proficiency])
+        req.body.charisma, req.body.inspiration, req.body.proficiency, req.body.skills])
             .then((result) => {
                 res.sendStatus(201);
             }).catch((error) => {

@@ -85,9 +85,10 @@ function* getClasses() {
 // Function to GET skills to determine characters skill proficiencies
 function* getClassSkills(action) {
     try {
+        console.log('SETTING SKILLS TO FALSE');
         //Sets all skills to false to allow accurate proficiency calculations
         yield call (axios.put, '/api/character/update/false')
-        const skills = yield call(axios.get, `/api/character/skills?class=${action.payload}`);
+        const skills = yield call(axios.get, `/api/character/skills/class?class=${action.payload}`);
         const characterSkills = {id: action.payload, skills: skills.data}
         yield put({type: 'SET_PROFICIENCIES', payload: characterSkills});
     }
@@ -100,6 +101,9 @@ function* getClassSkills(action) {
 function* setProficienies(action) {
     const skillList = yield classSkillSelector(action.payload.id, action.payload.skills);
     yield call(axios.put, '/api/character/update/true', skillList);
+    const allSkills = yield call(axios.get, '/api/character/skills');
+    console.log(allSkills);
+    yield put({type: 'SET_SKILLS', payload: allSkills.data});
 }
 // Function to send a GET request to populate dropdowns
 function* getRaces() {
