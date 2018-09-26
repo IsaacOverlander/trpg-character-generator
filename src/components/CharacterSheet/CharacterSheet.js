@@ -305,14 +305,12 @@ class CharacterSheet extends Component {
                             </Grid>
                             <br />
                             <Grid container className="border max-height">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                   Nulla sed est velit. Integer pretium leo eu varius cursus.
-                                   Praesent faucibus nulla quis libero fringilla, a aliquet
-                                   est pulvinar. Integer malesuada lobortis nibh nec porttitor.
-                                   Pellentesque at lobortis ipsum, ut pretium orci. Duis vitae
-                                   tristique velit. Nulla id scelerisque risus, vel dapibus dolor.
-                                   Etiam eget dignissim risus.
-                            </p>
+                                {characterInfo.class_features.map((feature, i) => {
+                                    return <Grid item md={6}><p>{feature}</p></Grid>
+                                })}
+                                {characterInfo.race_features.map((feature, i) => {
+                                    return <Grid item md={6}><p>{feature}</p></Grid>
+                                })}
                             </Grid>
                         </Grid>
                     </Grid>
