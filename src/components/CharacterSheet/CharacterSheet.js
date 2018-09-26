@@ -137,10 +137,9 @@ class CharacterSheet extends Component {
                             <br />
                             <div>Languages</div>
                             <div className="border">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                   Aenean diam velit, hendrerit et elit in, ultricies posuere nunc.
-                                   Vivamus magna nisi
-                            </p>
+                                {characterInfo.race_languages.map((language, i) => {
+                                    return <Grid item md={12}><p>{language}</p></Grid>
+                                })}
                             </div>
                         </Grid>
                         {/* item containing skills */}
