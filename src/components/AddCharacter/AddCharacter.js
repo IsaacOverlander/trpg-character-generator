@@ -103,11 +103,11 @@ class AddCharacter extends Component {
         this.setState({
             ...this.state,
             [event.target.name]: event.target.value,
+            skills: [],
         });
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="center-page-div">
                 <br />

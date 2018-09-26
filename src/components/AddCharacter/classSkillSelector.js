@@ -51,6 +51,7 @@ function getRandomSkills(skills, limit) {
     for (let i = 0; i < limit; i++) {
         let roll = d20.roll(`1d${skills.length - 1}`);
         skillList.push(skills[roll].skill);
+        skills.splice(roll, 1);
     }
     return proficientSkills = skillList;
 }
