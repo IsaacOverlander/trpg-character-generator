@@ -106,7 +106,6 @@ class AddCharacter extends Component {
         this.setState({
             ...this.state,
             [event.target.name]: event.target.value,
-            skills: [],
         });
     }
 

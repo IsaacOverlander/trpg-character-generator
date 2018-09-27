@@ -59,14 +59,24 @@ class MainPage extends Component {
         });
     }
 
+    toAdmin = () => {
+        this.props.history.push('admin');
+    }
+
     render() {
+        let adminLink = <p></p>
+        if(this.props.user.role === 'admin'){
+            adminLink = <Button variant="contained" color="primary" onClick={this.toAdmin}>Add Info</Button>
+        }
         return (
             <div>
                 <Grid container justify={"center"} cols={12}>
                     <Grid item md={12} >
+                        {adminLink}
                         <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
                     </Grid>
                     <Grid item md={1}>
+                        
                         <h3>Characters</h3>
                     </Grid>
                 </Grid>
