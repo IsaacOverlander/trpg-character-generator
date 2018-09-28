@@ -19,6 +19,7 @@ class CharacterSheet extends Component {
             name: '',
             id: '',
             exp: '',
+            hasCharacter: false,
         }
     }
 
@@ -35,6 +36,13 @@ class CharacterSheet extends Component {
     componentDidUpdate() {
         if (!this.props.user.isLoading && this.props.user.userName === null) {
             this.props.history.push('/home');
+        }
+        if (this.props.state.character.characterById.info && this.state.hasCharacter === false) {
+            this.props.dispatch({ type: 'GET_EQUIPMENT', payload: this.props.state.character.characterById.info.class_id });
+            this.setState({
+                ...this.state,
+                hasCharacter: true,
+            });
         }
     }
 
@@ -62,17 +70,23 @@ class CharacterSheet extends Component {
         });
     }
 
+    goBack = () => {
+        this.props.history.push('/main');
+    }
+
     render() {
         // Sets character variable to the information related to the page
         const characterInfo = this.props.state.character.characterById.info;
         const characterMods = this.props.state.character.characterById.mods;
-        
-        if (characterInfo && characterMods) {
+        const characterEquipment = this.props.state.character.equipment;
+
+        if (characterInfo && characterMods && characterEquipment[0]) {
             return (
                 <div>
-                    {/* Grid container for log out button and save form */}
+                    {/* Grid container for buttons and save form */}
                     <Grid container spacing={24}>
                         <Grid item sm={12}>
+                            <Button variant="contained" color="primary" onClick={this.goBack}>Main Page</Button>
                             <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
                         </Grid>
                         <Grid item sm={12} className="center-page-div">
@@ -138,7 +152,7 @@ class CharacterSheet extends Component {
                             <div>Languages</div>
                             <div className="border">
                                 {characterInfo.race_languages.map((language, i) => {
-                                    return <Grid item md={12}><p>{language}</p></Grid>
+                                    return <Grid key={i} item md={12}><p>{language}</p></Grid>
                                 })}
                             </div>
                         </Grid>
@@ -154,19 +168,21 @@ class CharacterSheet extends Component {
                             </div>
                             <br />
                             <div className="border skills">
-                                <input type="radio" readOnly checked={characterInfo.saving_throws[0]}/>__<label>Strength</label>
+                                <p>Saving Throws</p>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[0]} />__<label>Strength</label>
                                 <br />
-                                <input type="radio" readOnly checked={characterInfo.saving_throws[1]}/>__<label>Dexterity</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[1]} />__<label>Dexterity</label>
                                 <br />
-                                <input type="radio" readOnly checked={characterInfo.saving_throws[2]}/>__<label>Constitution</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[2]} />__<label>Constitution</label>
                                 <br />
-                                <input type="radio" readOnly checked={characterInfo.saving_throws[3]}/>__<label>Intelligence</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[3]} />__<label>Intelligence</label>
                                 <br />
-                                <input type="radio" readOnly checked={characterInfo.saving_throws[4]}/>__<label>Wisdom</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[4]} />__<label>Wisdom</label>
                                 <br />
-                                <input type="radio" readOnly checked={characterInfo.saving_throws[5]}/>__<label>Charisma</label>
+                                <input type="radio" readOnly checked={characterInfo.saving_throws[5]} />__<label>Charisma</label>
                             </div>
                             <div className="border skills">
+                                <p>Skills</p>
                                 <input type="radio" readOnly checked={characterInfo.character_skills[0]} />__<label>Acrobatics</label>
                                 <br />
                                 <input type="radio" readOnly checked={characterInfo.character_skills[1]} />__<label>Animal Handling</label>
@@ -247,39 +263,46 @@ class CharacterSheet extends Component {
                                     <Grid item md={4}>
                                         Damage/Type
                                 </Grid>
+                                    {/* Weapon One */}
                                     <Grid item md={4} className="border height-25">
-
+                                        {characterEquipment[0].equipment_name}
                                     </Grid>
                                     <Grid item md={4} className="border height-25">
-
+                                        {characterMods.dexterityModifier}
                                     </Grid>
                                     <Grid item md={4} className="border height-25">
-
+                                        {characterEquipment[0].damage}{characterMods.strengthModifier}
+                                    </Grid>
+                                    {/* Weapon Two */}
+                                    <Grid item md={4} className="border height-25">
+                                        {characterEquipment[1].equipment_name}
                                     </Grid>
                                     <Grid item md={4} className="border height-25">
-
+                                        {characterMods.dexterityModifier}
                                     </Grid>
                                     <Grid item md={4} className="border height-25">
-
+                                        {characterEquipment[1].damage}{characterMods.strengthModifier}
+                                    </Grid>
+                                    {/* Weapon 3 */}
+                                    <Grid item md={4} className="border height-25">
+                                        {characterEquipment[2].equipment_name}
                                     </Grid>
                                     <Grid item md={4} className="border height-25">
-
+                                        {characterMods.dexterityModifier}
                                     </Grid>
                                     <Grid item md={4} className="border height-25">
-
-                                    </Grid>
-                                    <Grid item md={4} className="border height-25">
-
-                                    </Grid>
-                                    <Grid item md={4} className="border height-25">
-
+                                        {characterEquipment[2].damage}{characterMods.strengthModifier}
                                     </Grid>
                                     <Grid item md={12} className="border height-150">
 
                                     </Grid>
                                 </Grid>
                                 <p>Equipment</p>
-                                <Grid container className="border height-150" justify={'flex-start'}></Grid>
+                                <Grid container className="border height-150" justify={'flex-start'}>
+                                    {characterEquipment.map((item, i) => {
+                                        return <Grid className="height-25" key={i} item md={4}>{item.equipment_name}</Grid>
+                                    })}
+                                </Grid>
                             </Grid>
                         </Grid>
                         {/* item containing traits and class/race skills */}
@@ -305,10 +328,10 @@ class CharacterSheet extends Component {
                             <br />
                             <Grid container className="border max-height">
                                 {characterInfo.class_features.map((feature, i) => {
-                                    return <Grid item md={6}><p>{feature}</p></Grid>
+                                    return <Grid key={i} item md={12}><p>{feature}</p></Grid>
                                 })}
                                 {characterInfo.race_features.map((feature, i) => {
-                                    return <Grid item md={6}><p>{feature}</p></Grid>
+                                    return <Grid key={i} item md={12}><p>{feature}</p></Grid>
                                 })}
                             </Grid>
                         </Grid>

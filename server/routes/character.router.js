@@ -175,6 +175,23 @@ router.post('/create', (req, res) => {
 
     }
 });
+// GET route for equipment
+router.get('/equipment/:id', (req, res) => {
+    if (req.isAuthenticated()) {
+        const query = `SELECT "equipment".* FROM "class_equipment" 
+                       JOIN "class" ON "class_id" = "class"."id" 
+                       JOIN "equipment" ON "equipment_id" = "equipment"."id" WHERE "class_id" = $1;`;
+        pool.query(query, [req.params.id]).then((result) => {
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('ERROR', error);
+            res.sendStatus(500);
+        });
+    }
+    else {
+        res.send('You are not logged in!');
+    }
+})
 // GET route for individual characters
 router.get('/:id', (req, res) => {
     if (req.isAuthenticated()) {
@@ -200,5 +217,6 @@ router.get('/:id', (req, res) => {
         res.send('You are not logged in')
     }
 });
+
 
 module.exports = router;

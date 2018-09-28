@@ -60,6 +60,10 @@ const App = () => (
           path="/character/:id"
           component={CharacterSheet}
         />
+        <Route
+          path="/technology"
+          component={TechUsed}
+        />
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 

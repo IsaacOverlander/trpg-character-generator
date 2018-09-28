@@ -17,7 +17,8 @@ class MainPage extends Component {
     componentDidMount() {
         this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
         // dispatch to get all characters for a specific user
-        this.props.dispatch({ type: 'GET_CHARACTERS' })
+        this.props.dispatch({ type: 'GET_CHARACTERS' });
+        this.props.dispatch({type: 'RESET_EQUIPMENT'});
     }
 
     componentDidUpdate() {
@@ -65,7 +66,7 @@ class MainPage extends Component {
 
     render() {
         let adminLink = <p></p>
-        if(this.props.user.role === 'admin'){
+        if (this.props.user.role === 'admin') {
             adminLink = <Button variant="contained" color="primary" onClick={this.toAdmin}>Add Info</Button>
         }
         return (
@@ -76,7 +77,7 @@ class MainPage extends Component {
                         <Button variant="contained" color="secondary" className="logout" onClick={this.logout}>Log Out</Button>
                     </Grid>
                     <Grid item md={1}>
-                        
+
                         <h3>Characters</h3>
                     </Grid>
                 </Grid>
@@ -88,7 +89,6 @@ class MainPage extends Component {
                 {/* container to display characters in cards */}
                 <Grid container justify={"space-evenly"}>
                     {this.props.state.character.characters.map((character) => {
-                        console.log(character);
                         return (
                             <Card key={character.id} className="characters">
                                 <h4>{character.name}</h4>

@@ -17,10 +17,7 @@ function* getCharacters() {
 function* getCharacterById(action) {
     try {
         const characterById = yield call(axios.get, `/api/character/${action.payload}`);
-        const characterToSet = {
-            character: characterById,
-        };
-        yield put({ type: 'SET_MODS', payload: characterToSet });
+        yield put({ type: 'SET_MODS', payload: characterById});
     } catch (error) {
         alert('There was an error getting your character!');
         console.log(error);
@@ -29,16 +26,16 @@ function* getCharacterById(action) {
 // Function to set a specific characters modifiers
 function* setModifiers(action) {
     const modifiers = yield ['-5', '-4', '-4', '-3', '-3', '-2', '-2', '-1', '-1', '+0', '+0', '+1', '+1', '+2', '+2', '+3', '+3', '+4', '+4', '+5'];
-    const strengthMod = yield modifiers[action.payload.character.data.strength - 1];
-    const dexterityMod = yield modifiers[action.payload.character.data.dexterity - 1];
-    const constitutionMod = yield modifiers[action.payload.character.data.constitution - 1];
-    const intelligenceMod = yield modifiers[action.payload.character.data.intelligence - 1];
-    const wisdomMod = yield modifiers[action.payload.character.data.wisdom - 1];
-    const charismaMod = yield modifiers[action.payload.character.data.charisma - 1];
+    const strengthMod = yield modifiers[action.payload.data.strength - 1];
+    const dexterityMod = yield modifiers[action.payload.data.dexterity - 1];
+    const constitutionMod = yield modifiers[action.payload.data.constitution - 1];
+    const intelligenceMod = yield modifiers[action.payload.data.intelligence - 1];
+    const wisdomMod = yield modifiers[action.payload.data.wisdom - 1];
+    const charismaMod = yield modifiers[action.payload.data.charisma - 1];
     const passiveWisdom = yield 10 + Number(wisdomMod);
     const armorClass = yield 10 + Number(dexterityMod);
     const character = yield {
-        info: action.payload.character.data,
+        info: action.payload.data,
         mods: {
             strengthModifier: strengthMod,
             dexterityModifier: dexterityMod,
@@ -125,6 +122,16 @@ function* updateCharacter(action) {
         console.log(error);
     }
 }
+// Funciton to GET equipment
+function* getEquipment(action) {
+    const equipment = yield call(axios.get,`/api/character/equipment/${action.payload}`);
+    yield put({type: 'SET_EQUIPMENT', payload: equipment.data});
+}
+// Function to reset equipment
+function* resetEquipment() {
+    const reset = {};
+    yield put({type: 'RESET', payload: reset});
+}
 
 function* characterSaga() {
     yield takeLatest('GET_CHARACTERS', getCharacters);
@@ -137,6 +144,8 @@ function* characterSaga() {
     yield takeLatest('SET_MODS', setModifiers);
     yield takeLatest('GET_CLASS_SKILLS', getClassSkills);
     yield takeLatest('SET_PROFICIENCIES', setProficienies);
+    yield takeLatest('GET_EQUIPMENT', getEquipment);
+    yield takeLatest('RESET_EQUIPMENT', resetEquipment);
 }
 
 export default characterSaga;

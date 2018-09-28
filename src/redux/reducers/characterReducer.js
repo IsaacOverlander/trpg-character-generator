@@ -13,7 +13,10 @@ const characters = (state = [], action) => {
 // Sets character by character_id
 const characterById = (state = {}, action) => {
     if (action.type === 'SET_CHARACTER_BY_ID'){
-            return action.payload;
+        return action.payload;
+    }
+    if (action.type === 'RESET') {
+        return action.payload;
     }
     return state;
 }
@@ -38,10 +41,23 @@ const skills = (state = [], action) => {
     }
     return state;
 }
+// Sets equipment by class_id
+const equipment = (state = {}, action) => {
+    if (action.type === 'SET_EQUIPMENT'){
+        console.log(action.payload);
+        return action.payload;
+    }
+    else if (action.type === 'RESET') {
+    console.log('In reset:', action.payload);
+        return action.payload;
+    }
+    return state;
+}
 
 export default combineReducers({
     characterById,
     characters,
+    equipment,
     classes,
     skills,
     races,
