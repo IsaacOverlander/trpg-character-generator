@@ -39,7 +39,7 @@ class GeneralInfoPage extends Component {
                                 <h3>Sample Characters</h3>
                                 <Card>
                                     <h4>Burfoot the Doorslayer!</h4>
-                                    <p>Class: Rouge</p>
+                                    <p>Class: Rogue</p>
                                     <p>Race: Halfling</p>
                                     <Button variant="contained" color="primary" onClick={this.toSampleOne}>View</Button>
                                 </Card>

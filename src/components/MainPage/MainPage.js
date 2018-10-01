@@ -52,6 +52,10 @@ class MainPage extends Component {
             }
         ).then((result) => {
             if (result) {
+                swal('Your character has been eaten by a Gru!!!', {
+                    button: 'OH NO!!!!',
+                    dangerMode: true,
+                });
                 this.props.dispatch({ type: 'DELETE_CHARACTER', payload: id });
             }
             else {
@@ -60,14 +64,14 @@ class MainPage extends Component {
         });
     }
 
-    toAdmin = () => {
-        this.props.history.push('admin');
+    toTech = () => {
+        this.props.history.push('technology');
     }
 
     render() {
         let adminLink = <p></p>
         if (this.props.user.role === 'admin') {
-            adminLink = <Button variant="contained" color="primary" onClick={this.toAdmin}>Add Info</Button>
+            adminLink = <Button variant="contained" color="primary" onClick={this.toTech}>Tech Used</Button>
         }
         return (
             <div>
@@ -92,8 +96,9 @@ class MainPage extends Component {
                         return (
                             <Card key={character.id} className="characters">
                                 <h4>{character.name}</h4>
-                                <p>Class: {character.class_name}</p>
                                 <p>Race: {character.race_name}</p>
+                                <p>Class: {character.class_name}</p>
+                                <img src="" alt="dnd" className="card-img"></img><br />
                                 <Button variant="contained" color="primary" onClick={() => this.toCharacter(character.character_id)}>View</Button>
                                 <Button variant="contained" color="secondary" onClick={() => this.deleteCharacter(character.character_id)}>Delete</Button>
                             </Card>

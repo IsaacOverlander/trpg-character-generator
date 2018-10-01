@@ -7,7 +7,6 @@ const createStats = () => {
     const idealToCreate = d20.roll('1d11');
     const bondToCreate = d20.roll('1d78');
     const flawToCreate = d20.roll('1d78');
-    const nameToCreate = 'John Doe';
     const strengthToCreate = (d20.roll('2d6')) + (d20.roll('1d8'));
     const dexterityToCreate = (d20.roll('2d6')) + (d20.roll('1d8'));
     const constitutionToCreate = (d20.roll('2d6')) + (d20.roll('1d8'));
@@ -24,7 +23,6 @@ const createStats = () => {
         ideal_id: idealToCreate,
         bond_id: bondToCreate,
         flaw_id: flawToCreate,
-        name: nameToCreate,
         strength: strengthToCreate,
         dexterity: dexterityToCreate,
         constitution: constitutionToCreate,

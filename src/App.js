@@ -16,6 +16,7 @@ import AdminPage from './components/AdminPage/AdminPage';
 import CharacterSheet from './components/CharacterSheet/CharacterSheet';
 import SampleOne from './components/SampleCharacters/SampleOne';
 import SampleTwo from './components/SampleCharacters/SampleTwo';
+import TechUsed from './components/TechUsed/TechUsed';
 import './styles/main.css';
 
 const App = () => (

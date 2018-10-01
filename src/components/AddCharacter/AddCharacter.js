@@ -17,6 +17,7 @@ class AddCharacter extends Component {
         super(props);
         // this.state properties match database "character" columns
         this.state = {
+            name: '',
             class_id: '',
             background_id: '',
             race_id: '',
@@ -118,6 +119,8 @@ class AddCharacter extends Component {
                 <Button variant="contained" color="primary" className="back" onClick={this.back}>Back</Button>
                 <h3>AddCharacter</h3>
                 <form>
+                    <label>Name</label>
+                    <input type="text" value={this.state.name} onChange={this.handleChange} name="name"></input>
                     {/* Race dropdown */}
                     <select value={this.state.race_id} onChange={this.handleChange} name="race_id" className="select-styles">
                         <option>Select a race</option>
