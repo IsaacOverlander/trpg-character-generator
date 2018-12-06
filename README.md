@@ -5,13 +5,13 @@ Currently the applications only supports Dungeons and Dragons characters, but in
 
 ## Technologies and Languages
 
-- [React]
-- [Redux]
-- [Sagas]
-- [Node.js]
-- [postgreSQL]
-- [Express.js]
-- [Material-ui]
+- React
+- Redux
+- Sagas
+- Node.js
+- postgreSQL
+- Express.js
+- Material-ui
 
 ## Prerequisites
 
